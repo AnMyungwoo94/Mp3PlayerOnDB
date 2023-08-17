@@ -16,13 +16,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".subrecycler.SubWebviewActivity"
+            android:name="com.myungwoo.mp3playerondb.subrecycler.SubWebviewActivity"
             android:exported="false" />
         <activity
-            android:name=".asmractivity.WebviewActivity"
+            android:name="com.myungwoo.mp3playerondb.asmractivity.WebviewActivity"
             android:exported="false" />
         <activity
-            android:name=".splash.SplashActivty"
+            android:name="com.myungwoo.mp3playerondb.splash.SplashActivty"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,13 +31,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".asmractivity.AsmrActivity"
+            android:name="com.myungwoo.mp3playerondb.asmractivity.AsmrActivity"
             android:exported="false" />
         <activity
-            android:name=".PlayActivity"
+            android:name="com.myungwoo.mp3playerondb.PlayActivity"
             android:exported="false" />
         <activity
-            android:name=".activitymainxml.MainActivity"
+            android:name="com.myungwoo.mp3playerondb.activitymainxml.MainActivity"
             android:exported="false" />
     </application>
 
