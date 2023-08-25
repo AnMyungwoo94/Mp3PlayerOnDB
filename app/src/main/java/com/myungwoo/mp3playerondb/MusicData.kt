@@ -9,6 +9,7 @@ import android.os.ParcelFileDescriptor
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
+import com.bumptech.glide.Glide
 import com.myungwoo.mp3playerondb.MusicData.Companion.write
 import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
@@ -44,35 +45,27 @@ class MusicData( var id: String, var title: String?, var artist: String?, var al
 
     fun getAlbumUri():Uri = Uri.parse("content://media/external/audio/albumart/${this.albumId}")
 
-    fun getAlbumBitmap(context:Context, albumSize:Int): Bitmap?{
-        val contentResolver = context.contentResolver
+    fun getAlbumBitmap(context: Context, albumSize: Int): Bitmap? {
         val albumUri = getAlbumUri()
-        val options = BitmapFactory.Options()
-        var bitmap:Bitmap? = null
-        var parcelFileDescriptor: ParcelFileDescriptor? = null
 
-        try {
-            if(albumUri != null){
-                parcelFileDescriptor = contentResolver.openFileDescriptor(albumUri, "r")
-                bitmap = BitmapFactory.decodeFileDescriptor(parcelFileDescriptor?.fileDescriptor, null, options)
+        return try {
+            if (albumUri != null) {
+                val requestBuilder = Glide.with(context)
+                    .asBitmap()
+                    .load(albumUri)
 
-                if(bitmap != null){
-                    val tempBitmap = Bitmap.createScaledBitmap(bitmap, albumSize, albumSize,true)
-                    bitmap.recycle()
-                    bitmap = tempBitmap
-                }
+                val bitmap = requestBuilder.submit().get()
+
+                // 크기 조정 등의 추가적인 처리
+
+                bitmap
+            } else {
+                null
             }
-        }catch (e:java.lang.Exception){
-            Log.e("MusicData",e.toString())
-        }finally {
-            try {
-                if (parcelFileDescriptor != null) {
-                    parcelFileDescriptor?.close()
-                }
-            } catch (e: java.lang.Exception) {
-                Log.e("MusicData", e.toString())
-            }
+        } catch (e: Exception) {
+            Log.e("MusicData", e.toString())
+            null
         }
-        return bitmap
     }
+
 }

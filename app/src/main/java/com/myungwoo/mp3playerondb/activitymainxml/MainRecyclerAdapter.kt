@@ -1,5 +1,6 @@
 package com.myungwoo.mp3playerondb.activitymainxml
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
@@ -26,6 +27,7 @@ class MainRecyclerAdapter(val context:Context, val musicList:MutableList<MusicDa
 
     override fun getItemCount(): Int = musicList.size
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val binding = holder.binding
         // 이미지, artist, title, duration binding
