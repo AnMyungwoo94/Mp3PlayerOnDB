@@ -1,8 +1,10 @@
 package com.myungwoo.mp3playerondb.activitymainxml
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     //데이타베이스 생성
     private val dbOpenHelper by lazy { DBOpenHelper(this, DB_NAME, VERSION) }
     val permission = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    val permission_sdk33 = arrayOf(android.Manifest.permission.READ_MEDIA_AUDIO)
     var musicDataList: MutableList<MusicData>? = mutableListOf<MusicData>()
     lateinit var mainRecyclerAdapter: MainRecyclerAdapter
     lateinit var subRecyclerAdapter: SubRecyclerAdapter
@@ -44,13 +47,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+
+
         //외장메모리 읽기 승인
         var flag = ContextCompat.checkSelfPermission(this, permission[0])
         if (flag == PackageManager.PERMISSION_GRANTED) {
             startProcess()
         } else {
-            //승인요청
-            ActivityCompat.requestPermissions(this, permission, REQUEST_CODE)
+//            //승인요청
+            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.TIRAMISU) {
+                ActivityCompat.requestPermissions(this, permission_sdk33, REQUEST_CODE)
+            } else{
+                ActivityCompat.requestPermissions(this, permission, REQUEST_CODE)
+            }
+
         }
     }
 
