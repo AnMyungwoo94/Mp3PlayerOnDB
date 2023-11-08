@@ -16,11 +16,8 @@ class WebviewActivity : AppCompatActivity() {
 
         //웹뷰를 만들때 필수속성 세가지
         binding.webView.webViewClient = WebViewClient()
-
         binding.webView.webChromeClient = WebChromeClient()
-
         binding.webView.settings.javaScriptEnabled= true
-
         var place_url : String = intent.getStringExtra("url") ?: ""
         binding.webView.loadUrl(place_url)
     }

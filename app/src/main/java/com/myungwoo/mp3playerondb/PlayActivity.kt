@@ -1,5 +1,6 @@
 package com.myungwoo.mp3playerondb
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,9 @@ import android.widget.SeekBar
 import android.widget.Toast
 import com.myungwoo.mp3playerondb.R
 import com.myungwoo.mp3playerondb.databinding.ActivityPlayBinding
+import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_PAUSE
+import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_PLAY
+import com.myungwoo.mp3playerondb.service.MediaPlayerService
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 
@@ -67,6 +71,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     mediaPlayer?.seekTo(progress)
                 }
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
@@ -75,17 +80,28 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.listButton -> {
+                //전체 목록으로 가는 버튼
                 mp3playerJob?.cancel()
                 mediaPlayer?.stop() //멈추기
                 mediaPlayer?.release() // 할당된 메모리해제
                 mediaPlayer = null
                 finish() //끝내기
             }
+
             R.id.playButton -> {
+                val intent = Intent(this, MediaPlayerService::class.java)
+                    .apply { action = MEDIA_PLAYER_PLAY }
+                startService(intent)
+
                 if (mediaPlayer!!.isPlaying) {
+                    val intent = Intent(this, MediaPlayerService::class.java)
+                        .apply { action = MEDIA_PLAYER_PAUSE }
+                    startService(intent)
+
                     mediaPlayer?.pause() // 멈추기
                     binding.playButton.setImageResource(R.drawable.play_circle_24)
                     pauseFlag = true
+
                 } else {
                     //노래 재생
                     mediaPlayer?.start()
@@ -129,6 +145,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
             }
+
             R.id.nextSongButton -> {
                 if (currentposition < playList!!.size - 1) {
                     ++currentposition
@@ -138,6 +155,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                 setReplay()
                 start()
             }
+
             R.id.backSongButton -> {
                 if (currentposition == 0) {
                     currentposition = playList!!.size - 1
@@ -147,6 +165,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                 setReplay()
                 start()
             }
+
             R.id.shuffleButton -> {
                 currentposition = (Math.random() * playList!!.size).toInt()
                 setReplay()
@@ -155,7 +174,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun setReplay() {
+    private fun setReplay() {
         mediaPlayer?.stop()
         mp3playerJob?.cancel()
         musicData = playList?.get(currentposition) as MusicData
@@ -178,7 +197,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun start() {
+    private fun start() {
         //노래 재생
         mediaPlayer?.start()
         binding.playButton.setImageResource(R.drawable.pause_circle_24)
@@ -212,9 +231,11 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
     override fun onBackPressed() {
         mp3playerJob?.cancel()
         mediaPlayer?.stop()
         finish()
     }
+
 }
