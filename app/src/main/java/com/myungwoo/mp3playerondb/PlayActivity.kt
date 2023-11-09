@@ -1,33 +1,40 @@
 package com.myungwoo.mp3playerondb
 
+import android.app.NotificationManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
+import android.content.IntentFilter
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
-import android.widget.Toast
-import com.myungwoo.mp3playerondb.R
+import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.myungwoo.mp3playerondb.databinding.ActivityPlayBinding
+import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_BACK
+import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_LIST
+import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_NEXT
 import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_PAUSE
 import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_PLAY
+import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_SHUFFLE
+import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_STOP
 import com.myungwoo.mp3playerondb.service.MediaPlayerService
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 
 class PlayActivity : AppCompatActivity(), View.OnClickListener {
-    lateinit var binding: ActivityPlayBinding
-    lateinit var musicData: MusicData
+    private lateinit var binding: ActivityPlayBinding
+    private lateinit var musicData: MusicData
     private var playList: MutableList<Parcelable>? = null
     private var currentposition: Int = 0
-    val ALBUM_IMAGE_SIZE = 100
+    private val ALBUM_IMAGE_SIZE = 100
+    private var mp3playerJob: Job? = null
+    private var pauseFlag = false
     var mediaPlayer: MediaPlayer? = null
-    var mp3playerJob: Job? = null
-    var pauseFlag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +87,10 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.listButton -> {
+//                val intent = Intent(this, MediaPlayerService::class.java)
+//                    .apply { action = MEDIA_PLAYER_LIST }
+//                startService(intent)
+
                 //전체 목록으로 가는 버튼
                 mp3playerJob?.cancel()
                 mediaPlayer?.stop() //멈추기
@@ -91,12 +102,13 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
             R.id.playButton -> {
                 val intent = Intent(this, MediaPlayerService::class.java)
                     .apply { action = MEDIA_PLAYER_PLAY }
+                intent.putExtra("musicData", musicData)
                 startService(intent)
 
                 if (mediaPlayer!!.isPlaying) {
-                    val intent = Intent(this, MediaPlayerService::class.java)
-                        .apply { action = MEDIA_PLAYER_PAUSE }
-                    startService(intent)
+//                    val intent = Intent(this, MediaPlayerService::class.java)
+//                        .apply { action = MEDIA_PLAYER_PAUSE }
+//                    startService(intent)
 
                     mediaPlayer?.pause() // 멈추기
                     binding.playButton.setImageResource(R.drawable.play_circle_24)
@@ -127,7 +139,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                                 Log.e("PlayActivity", "delay 오류발생 ${e.printStackTrace()}")
                             }
                         }
-                        if (pauseFlag == false) {
+                        if (!pauseFlag) {
                             runOnUiThread {
                                 binding.seekBar.progress = 0
                                 binding.playButton.setImageResource(R.drawable.play_circle_24)
@@ -173,6 +185,135 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+
+//    fun handleMediaAction(action: String) {
+//        when (action) {
+//            MEDIA_PLAYER_LIST -> {
+//                val intent = Intent(this, MediaPlayerService::class.java)
+//                intent.action = MEDIA_PLAYER_LIST
+//                sendBroadcast(intent)
+//
+//                //전체 목록으로 가는 버튼
+//                mp3playerJob?.cancel()
+//                mediaPlayer?.stop() //멈추기
+//                mediaPlayer?.release() // 할당된 메모리해제
+//                mediaPlayer = null
+//                finish() //끝내기
+//            }
+//
+//            MEDIA_PLAYER_PLAY -> {
+//                val intent = Intent(this, MediaPlayerService::class.java)
+//                intent.action = MEDIA_PLAYER_PLAY
+//                sendBroadcast(intent)
+//
+//                if (mediaPlayer!!.isPlaying) {
+//                    val intent = Intent(this, MediaPlayerService::class.java)
+//                    intent.action = MEDIA_PLAYER_PAUSE
+//                    sendBroadcast(intent)
+//
+//                    mediaPlayer?.pause() // 멈추기
+//                    binding.playButton.setImageResource(R.drawable.play_circle_24)
+//                    pauseFlag = true
+//
+//                } else {
+//                    //노래 재생
+//                    mediaPlayer?.start()
+//                    binding.playButton.setImageResource(R.drawable.pause_circle_24)
+//                    pauseFlag = false
+//
+//                    // 코루틴으로 음악을 재생
+//                    val backgroundScope = CoroutineScope(Dispatchers.Default + Job())
+//                    mp3playerJob = backgroundScope.launch {
+//                        while (mediaPlayer!!.isPlaying) {
+//                            var currentPosition = mediaPlayer?.currentPosition!!
+//                            // 코루틴속에서 화면의 값을 변동시키고자 할 때 runOnUiThread 사용
+//                            var strCurrentPosition =
+//                                SimpleDateFormat("mm:ss").format(mediaPlayer?.currentPosition)
+//                            runOnUiThread {
+//                                binding.seekBar.progress = currentPosition
+//                                binding.playDuration.text = strCurrentPosition
+//                            }
+//                            try {
+//                                delay(1000)
+//                                binding.seekBar.incrementProgressBy(1000)
+//                            } catch (e: java.lang.Exception) {
+//                                Log.e("PlayActivity", "delay 오류발생 ${e.printStackTrace()}")
+//                            }
+//                        }
+//                        if (!pauseFlag) {
+//                            runOnUiThread {
+//                                binding.seekBar.progress = 0
+//                                binding.playButton.setImageResource(R.drawable.play_circle_24)
+//                                binding.playDuration.text = "00:00"
+//                                //노래가 끝나면 다음곡으로 재생하게끔 진행(없으면 현재곡에서 멈춤)
+//                                if (currentposition < playList!!.size - 1) {
+//                                    ++currentposition
+//                                } else {
+//                                    currentposition = 0
+//                                }
+//                                setReplay()
+//                                start()
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            MEDIA_PLAYER_NEXT -> {
+//                val intent = Intent(this, MediaPlayerService::class.java)
+//                intent.action = MEDIA_PLAYER_NEXT
+//                sendBroadcast(intent)
+//
+//                if (currentposition < playList!!.size - 1) {
+//                    ++currentposition
+//                } else {
+//                    currentposition = 0
+//                }
+//                setReplay()
+//                start()
+//            }
+//
+//            MEDIA_PLAYER_BACK -> {
+//
+//                val intent = Intent(this, MediaPlayerService::class.java)
+//                intent.action = MEDIA_PLAYER_BACK
+//                sendBroadcast(intent)
+//
+//                if (currentposition == 0) {
+//                    currentposition = playList!!.size - 1
+//                } else {
+//                    --currentposition
+//                }
+//                setReplay()
+//                start()
+//            }
+//
+//            MEDIA_PLAYER_SHUFFLE -> {
+//
+//                val intent = Intent(this, MediaPlayerService::class.java)
+//                intent.action = MEDIA_PLAYER_SHUFFLE
+//                sendBroadcast(intent)
+//
+//                currentposition = (Math.random() * playList!!.size).toInt()
+//                setReplay()
+//                start()
+//            }
+//
+//            MEDIA_PLAYER_STOP -> {
+//                val intent = Intent(this, MediaPlayerService::class.java)
+//                intent.action = MEDIA_PLAYER_STOP
+//                Log.e("스탑", "스탑")
+//                sendBroadcast(intent)
+//
+//                mp3playerJob?.cancel()
+//                mediaPlayer?.stop() //멈추기
+//                mediaPlayer?.release() // 할당된 메모리해제
+//                mediaPlayer = null
+//                finish()
+//            }
+//        }
+//    }
 
     private fun setReplay() {
         mediaPlayer?.stop()
@@ -222,7 +363,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     Log.e("PlayActivity", "delay 오류발생 ${e.printStackTrace()}")
                 }
             }
-            if (pauseFlag == false) {
+            if (!pauseFlag) {
                 runOnUiThread {
                     binding.seekBar.progress = 0
                     binding.playButton.setImageResource(R.drawable.play_circle_24)
