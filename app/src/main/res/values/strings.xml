@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MusicPlay</string>
+    <string name="permission_message">녹음 권한을 켜주셔야지 앱을 정상적으로 사용할 수 있습니다. 앱 설정 화면으로 진입하셔서 권한을 켜주세요.</string>
 </resources>

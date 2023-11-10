@@ -1,6 +1,5 @@
 package com.myungwoo.mp3playerondb.activitymainxml
 
-import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -19,8 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.myungwoo.mp3playerondb.DBOpenHelper
 import com.myungwoo.mp3playerondb.MusicData
 import com.myungwoo.mp3playerondb.R
+import com.myungwoo.mp3playerondb.record.RecordActivity
 import com.myungwoo.mp3playerondb.asmractivity.AsmrActivity
-import com.myungwoo.mp3playerondb.asmractivity.AsmrWebviewAdapter
 import com.myungwoo.mp3playerondb.databinding.ActivityMainBinding
 import com.myungwoo.mp3playerondb.subrecycler.SubItemDataList
 import com.myungwoo.mp3playerondb.subrecycler.SubRecyclerAdapter
@@ -115,6 +114,10 @@ class MainActivity : AppCompatActivity() {
                     dbOpenHelper.selectAllMusicTBL()?.let { musicDataList?.addAll(it) }
                     mainRecyclerAdapter.notifyDataSetChanged()
                 }
+            }
+            R.id.menu_recode -> {
+                val intent = Intent(this, RecordActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)

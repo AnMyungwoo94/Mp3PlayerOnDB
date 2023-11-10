@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".record.RecordActivity">
 
     <TextView
         android:id="@+id/timerTextView"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+    <com.myungwoo.mp3playerondb.record.WaveFormView
         android:id="@+id/waveformView"
         android:layout_width="0dp"
         android:layout_height="250dp"
