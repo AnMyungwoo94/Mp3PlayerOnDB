@@ -1,10 +1,6 @@
-package com.myungwoo.mp3playerondb
+package com.myungwoo.mp3playerondb.view
 
-import android.app.NotificationManager
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,16 +8,10 @@ import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
-import androidx.core.content.ContextCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.myungwoo.mp3playerondb.data.MusicData
+import com.myungwoo.mp3playerondb.R
 import com.myungwoo.mp3playerondb.databinding.ActivityPlayBinding
-import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_BACK
-import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_LIST
-import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_NEXT
-import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_PAUSE
 import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_PLAY
-import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_SHUFFLE
-import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_STOP
 import com.myungwoo.mp3playerondb.service.MediaPlayerService
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat

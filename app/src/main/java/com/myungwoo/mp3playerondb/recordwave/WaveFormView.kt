@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.record
+package com.myungwoo.mp3playerondb.recordwave
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,8 +7,6 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
-import androidx.core.graphics.red
-import java.time.Duration
 
 class WaveFormView @JvmOverloads constructor(
     context: Context,

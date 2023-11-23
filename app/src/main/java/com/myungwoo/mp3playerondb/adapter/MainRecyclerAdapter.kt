@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.activitymainxml
+package com.myungwoo.mp3playerondb.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,9 +10,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.myungwoo.mp3playerondb.*
 import com.myungwoo.mp3playerondb.databinding.ItemRecyclerBinding
-import com.myungwoo.mp3playerondb.DBOpenHelper
-import com.myungwoo.mp3playerondb.MusicData
-import com.myungwoo.mp3playerondb.PlayActivity
+import com.myungwoo.mp3playerondb.db.DBOpenHelper
+import com.myungwoo.mp3playerondb.data.MusicData
+import com.myungwoo.mp3playerondb.view.MainActivity
+import com.myungwoo.mp3playerondb.view.PlayActivity
 import java.text.SimpleDateFormat
 
 class MainRecyclerAdapter(val context:Context, val musicList:MutableList<MusicData>):

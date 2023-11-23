@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.activitymainxml
+package com.myungwoo.mp3playerondb.view
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -15,15 +15,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.myungwoo.mp3playerondb.DBOpenHelper
-import com.myungwoo.mp3playerondb.MusicData
+import com.myungwoo.mp3playerondb.db.DBOpenHelper
+import com.myungwoo.mp3playerondb.data.MusicData
 import com.myungwoo.mp3playerondb.R
-import com.myungwoo.mp3playerondb.record.RecordActivity
-import com.myungwoo.mp3playerondb.asmractivity.AsmrActivity
+import com.myungwoo.mp3playerondb.adapter.MainRecyclerAdapter
 import com.myungwoo.mp3playerondb.databinding.ActivityMainBinding
-import com.myungwoo.mp3playerondb.subrecycler.SubItemDataList
-import com.myungwoo.mp3playerondb.subrecycler.SubRecyclerAdapter
-import com.myungwoo.mp3playerondb.subrecycler.SubWebviewAdapter
+import com.myungwoo.mp3playerondb.data.SubItemData
+import com.myungwoo.mp3playerondb.adapter.SubRecyclerAdapter
+import com.myungwoo.mp3playerondb.adapter.SubWebviewAdapter
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -40,13 +39,11 @@ class MainActivity : AppCompatActivity() {
     var musicDataList: MutableList<MusicData>? = mutableListOf<MusicData>()
     lateinit var mainRecyclerAdapter: MainRecyclerAdapter
     lateinit var subRecyclerAdapter: SubRecyclerAdapter
-    lateinit var subItemDataList: MutableList<SubItemDataList>
+    lateinit var subItemDataList: MutableList<SubItemData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-
 
         //외장메모리 읽기 승인
         var flag = ContextCompat.checkSelfPermission(this, permission[0])
@@ -88,7 +85,6 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         })
-
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -141,7 +137,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun startProcess() {
         // 데이타베이스를 조회해서 음악파일이 있다면, 음원정보를 가져와서 데이타베이스 입력했음을 뜻함
-        // 데이타베이스를 조회해서 음악파일이 없다면, 음원정보를 가져와서 데이타베이스 입력하지 않음을 뜻함.
         //1. 데이타베이스에서 음원파일을 가져온다.
         var musicDataDBList: MutableList<MusicData>? = mutableListOf<MusicData>()
         musicDataDBList = dbOpenHelper.selectAllMusicTBL()
@@ -195,11 +190,11 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         //Adapter와 Subitem_recycler 연결
-        subItemDataList = mutableListOf<SubItemDataList>()
-        subItemDataList.add(SubItemDataList(R.drawable.movieposter1, "https://www.youtube.com/watch?v=0r85vZIzayg"))
-        subItemDataList.add(SubItemDataList(R.drawable.movieposter2, "https://www.youtube.com/watch?v=YIPz1JpaXDc"))
-        subItemDataList.add(SubItemDataList(R.drawable.movieposter3, "https://www.youtube.com/watch?v=LoRwHdN7H1g"))
-        subItemDataList.add(SubItemDataList(R.drawable.movieposter4, "https://www.youtube.com/watch?v=EkRuV-h6Bv0"))
+        subItemDataList = mutableListOf<SubItemData>()
+        subItemDataList.add(SubItemData(R.drawable.movieposter1, "https://www.youtube.com/watch?v=0r85vZIzayg"))
+        subItemDataList.add(SubItemData(R.drawable.movieposter2, "https://www.youtube.com/watch?v=YIPz1JpaXDc"))
+        subItemDataList.add(SubItemData(R.drawable.movieposter3, "https://www.youtube.com/watch?v=LoRwHdN7H1g"))
+        subItemDataList.add(SubItemData(R.drawable.movieposter4, "https://www.youtube.com/watch?v=EkRuV-h6Bv0"))
 
         binding.recyclerViewMain.adapter = SubWebviewAdapter(this,subItemDataList)
         binding.recyclerViewMain.layoutManager =

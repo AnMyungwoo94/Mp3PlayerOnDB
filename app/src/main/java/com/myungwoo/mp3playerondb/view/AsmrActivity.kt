@@ -1,10 +1,12 @@
-package com.myungwoo.mp3playerondb.asmractivity
+package com.myungwoo.mp3playerondb.view
 
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.myungwoo.mp3playerondb.R
+import com.myungwoo.mp3playerondb.data.AsmrData
+import com.myungwoo.mp3playerondb.adapter.AsmrWebviewAdapter
 import com.myungwoo.mp3playerondb.databinding.ActivityAsmrBinding
 
 class AsmrActivity : AppCompatActivity() {

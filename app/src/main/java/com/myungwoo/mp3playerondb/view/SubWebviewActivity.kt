@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.subrecycler
+package com.myungwoo.mp3playerondb.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

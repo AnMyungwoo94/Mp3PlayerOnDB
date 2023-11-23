@@ -11,14 +11,9 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import com.myungwoo.mp3playerondb.MusicData
-import com.myungwoo.mp3playerondb.PlayActivity
+import com.myungwoo.mp3playerondb.data.MusicData
+import com.myungwoo.mp3playerondb.view.PlayActivity
 import com.myungwoo.mp3playerondb.R
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.NonCancellable.start
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 
 
 class MediaPlayerService : Service() {

@@ -28,8 +28,8 @@
 -dontwarn org.openjsse.**
 
 #데이터 클래스 난독화 풀기
--keep class com.myungwoo.mp3playerondb.asmractivity.**
--keep class com.myungwoo.mp3playerondb.asmractivity.** { *; }
+-keep class com.myungwoo.mp3playerondb.data.**
+-keep class com.myungwoo.mp3playerondb.data.** { *; }
 
 -keep class com.myungwoo.mp3playerondb.subrecycler.**
 -keep class com.myungwoo.mp3playerondb.subrecycler.** { *; }

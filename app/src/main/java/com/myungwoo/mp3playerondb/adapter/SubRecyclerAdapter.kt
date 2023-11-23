@@ -1,12 +1,13 @@
-package com.myungwoo.mp3playerondb.subrecycler
+package com.myungwoo.mp3playerondb.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.myungwoo.mp3playerondb.databinding.SubitemRecyclerBinding
+import com.myungwoo.mp3playerondb.data.SubItemData
 
 
-class SubRecyclerAdapter(val mainSubImageList:MutableList<SubItemDataList>):
+class SubRecyclerAdapter(val mainSubImageList:MutableList<SubItemData>):
     RecyclerView.Adapter<SubRecyclerAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {

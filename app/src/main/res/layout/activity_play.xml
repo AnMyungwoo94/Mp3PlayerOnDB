@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.myungwoo.mp3playerondb.PlayActivity">
+    tools:context="com.myungwoo.mp3playerondb.view.PlayActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout2"

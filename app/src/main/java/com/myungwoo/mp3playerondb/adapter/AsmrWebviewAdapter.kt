@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.asmractivity
+package com.myungwoo.mp3playerondb.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.myungwoo.mp3playerondb.R
+import com.myungwoo.mp3playerondb.data.AsmrData
+import com.myungwoo.mp3playerondb.view.WebviewActivity
 
 class AsmrWebviewAdapter(var context: Context, var items : MutableList<AsmrData>) : RecyclerView.Adapter<AsmrWebviewAdapter.Holder>() {
 
@@ -35,10 +37,8 @@ class AsmrWebviewAdapter(var context: Context, var items : MutableList<AsmrData>
             intent.putExtra("url", item.url)
             context.startActivity(intent)
         }
-
     }
         inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
             val tvPlayName: TextView by lazy { itemView.findViewById(R.id.tvPlayNameAsmrSecond) }
             val iv: ImageView by lazy { itemView.findViewById(R.id.ivPlayAsmrSecond) }
             val asmrImge : ImageView by lazy { itemView.findViewById(R.id.ivAsmrSecond) }

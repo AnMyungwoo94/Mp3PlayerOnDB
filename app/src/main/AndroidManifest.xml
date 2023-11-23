@@ -20,7 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".record.RecordActivity"
+            android:name=".view.RecordActivity"
             android:exported="false" />
 
         <service
@@ -31,13 +31,13 @@
         </service>
 
         <activity
-            android:name=".subrecycler.SubWebviewActivity"
+            android:name=".view.SubWebviewActivity"
             android:exported="false" />
         <activity
-            android:name=".asmractivity.WebviewActivity"
+            android:name=".view.WebviewActivity"
             android:exported="false" />
         <activity
-            android:name=".splash.SplashActivty"
+            android:name=".view.SplashActivty"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,13 +46,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".asmractivity.AsmrActivity"
+            android:name=".view.AsmrActivity"
             android:exported="false" />
         <activity
-            android:name=".PlayActivity"
+            android:name=".view.PlayActivity"
             android:exported="false" />
         <activity
-            android:name=".activitymainxml.MainActivity"
+            android:name=".view.MainActivity"
             android:exported="false" />
     </application>
 

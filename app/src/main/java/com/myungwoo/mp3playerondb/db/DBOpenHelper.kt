@@ -1,10 +1,11 @@
-package com.myungwoo.mp3playerondb
+package com.myungwoo.mp3playerondb.db
 
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.myungwoo.mp3playerondb.data.MusicData
 
 class DBOpenHelper(context:Context, dbName:String, version: Int):SQLiteOpenHelper(context, dbName, null, version) {
     override fun onCreate(db: SQLiteDatabase?) {

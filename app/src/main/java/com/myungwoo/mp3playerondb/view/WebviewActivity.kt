@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.asmractivity
+package com.myungwoo.mp3playerondb.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

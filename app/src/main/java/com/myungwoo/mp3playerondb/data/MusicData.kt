@@ -1,19 +1,15 @@
-package com.myungwoo.mp3playerondb
+package com.myungwoo.mp3playerondb.data
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Parcel
-import android.os.ParcelFileDescriptor
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
 import com.bumptech.glide.Glide
-import com.myungwoo.mp3playerondb.MusicData.Companion.write
 import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
-import java.io.Serializable
 
 @Parcelize
 class MusicData( var id: String, var title: String?, var artist: String?, var albumId: String?, var duration: Int?, var likes: Int?) : Parcelable {
@@ -21,7 +17,6 @@ class MusicData( var id: String, var title: String?, var artist: String?, var al
         override fun create(parcel: Parcel): MusicData {
            return  MusicData(parcel)
         }
-
         override fun MusicData.write(parcel: Parcel, flags: Int) {
            parcel.writeString(id)
            parcel.writeString(title)
@@ -55,9 +50,7 @@ class MusicData( var id: String, var title: String?, var artist: String?, var al
                     .load(albumUri)
 
                 val bitmap = requestBuilder.submit().get()
-
                 // 크기 조정 등의 추가적인 처리
-
                 bitmap
             } else {
                 null
@@ -67,5 +60,4 @@ class MusicData( var id: String, var title: String?, var artist: String?, var al
             null
         }
     }
-
 }

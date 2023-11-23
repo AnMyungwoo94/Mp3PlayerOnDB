@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.record
+package com.myungwoo.mp3playerondb.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +17,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.myungwoo.mp3playerondb.R
+import com.myungwoo.mp3playerondb.recordwave.OnTimerTickListener
+import com.myungwoo.mp3playerondb.recordwave.Timer
 import java.io.IOException
 
 class RecordActivity : AppCompatActivity(), OnTimerTickListener {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.myungwoo.mp3playerondb.asmractivity.WebviewActivity">
+    tools:context="com.myungwoo.mp3playerondb.view.WebviewActivity">
 
     <WebView
         android:id="@+id/webView"

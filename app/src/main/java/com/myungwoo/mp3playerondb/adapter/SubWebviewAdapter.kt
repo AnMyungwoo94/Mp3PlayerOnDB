@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.subrecycler
+package com.myungwoo.mp3playerondb.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.ImageView
-import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.myungwoo.mp3playerondb.R
-import com.myungwoo.mp3playerondb.asmractivity.AsmrData
-import com.myungwoo.mp3playerondb.asmractivity.WebviewActivity
+import com.myungwoo.mp3playerondb.data.SubItemData
+import com.myungwoo.mp3playerondb.view.SubWebviewActivity
 
-class SubWebviewAdapter(var context : Context, var items : MutableList<SubItemDataList>) : RecyclerView.Adapter<SubWebviewAdapter.Holder>(){
+class SubWebviewAdapter(var context : Context, var items : MutableList<SubItemData>) : RecyclerView.Adapter<SubWebviewAdapter.Holder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val itemView: View =
@@ -22,7 +21,7 @@ class SubWebviewAdapter(var context : Context, var items : MutableList<SubItemDa
     }
     override fun getItemCount(): Int = items.size
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        var item: SubItemDataList = items[position]
+        var item: SubItemData = items[position]
         holder.ivMainSubImage.setImageResource(item.ivMainSubImage)
 
         holder.ivMainSubImage.setOnClickListener {
