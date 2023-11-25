@@ -64,7 +64,7 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
             }
         }
 
-        binding.playButton.setOnClickListener {
+        binding.recoadPlayButton.setOnClickListener {
             when (state) {
                 State.RELEASE -> {
                     onplay(true)
@@ -76,8 +76,8 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
             }
         }
         //처음에는 플레이버튼 실행 안되도록
-        binding.playButton.isEnabled = false
-        binding.playButton.alpha = 0.3f
+        binding.recoadPlayButton.isEnabled = false
+        binding.recoadPlayButton.alpha = 0.3f
 
         binding.stopButton.setOnClickListener {
             when (state) {
@@ -153,8 +153,8 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
         )
         //오디오 실행시 버튼 조절하기
         binding.recordButton.imageTintList = ColorStateList.valueOf(Color.BLACK)
-        binding.playButton.isEnabled = false //재생버튼은 더이상 눌리지 않음
-        binding.playButton.alpha = 0.3f //재생버튼이 조금 흐려짐(안됨 표시)
+        binding.recoadPlayButton.isEnabled = false //재생버튼은 더이상 눌리지 않음
+        binding.recoadPlayButton.alpha = 0.3f //재생버튼이 조금 흐려짐(안됨 표시)
     }
 
     private fun stopRecoding() {
@@ -172,8 +172,8 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
             )
         )
         binding.recordButton.imageTintList = ColorStateList.valueOf(Color.RED)
-        binding.playButton.isEnabled = true //재생버튼은 더이상 눌리지 않음
-        binding.playButton.alpha = 1.0f //재생버튼이 조금 흐려짐(안됨 표시)
+        binding.recoadPlayButton.isEnabled = true //재생버튼은 더이상 눌리지 않음
+        binding.recoadPlayButton.alpha = 1.0f //재생버튼이 조금 흐려짐(안됨 표시)
     }
 
     private fun startPlaying() {
