@@ -4,66 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.myungwoo.mp3playerondb.view.PlayActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent">
-        </androidx.appcompat.widget.Toolbar>
-    </LinearLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/albumImage"
+        android:layout_width="380dp"
+        android:layout_height="380dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_weight="5"
+        android:background="@android:color/transparent"
+        android:src="@drawable/music"
+        app:civ_border_color="#000000"
+        app:civ_border_overlay="true"
+        app:civ_border_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/backSongButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/albumImage"
-                android:layout_width="380dp"
-                android:layout_height="380dp"
-                android:layout_gravity="center"
-                android:layout_weight="5"
-                android:background="@android:color/transparent"
-                android:src="@drawable/music"
-                app:civ_border_color="#000000"
-                app:civ_border_overlay="true"
-                app:civ_border_width="0dp"
-                tools:ignore="MissingClass" />
-        </LinearLayout>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+        app:layout_constraintTop_toBottomOf="@+id/albumImage">
 
         <TextView
             android:id="@+id/albumTitle"
@@ -98,7 +76,7 @@
                 android:layout_marginStart="15dp"
                 android:gravity="left"
                 android:text="00:00"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
             <View
                 android:layout_width="0dp"
@@ -112,7 +90,7 @@
                 android:layout_marginEnd="15dp"
                 android:gravity="right"
                 android:text="00:00"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
         </LinearLayout>
 
         <SeekBar
@@ -124,75 +102,90 @@
             android:theme="@style/SeekBarColor" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:padding="10dp"
+    <ImageButton
+        android:id="@+id/listButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="list"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/list_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/backSongButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/backSongButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="next"
+        android:minWidth="70dp"
+        android:minHeight="70dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/playButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/listButton"
+        app:srcCompat="@drawable/skip_previous_24" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="play"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nextSongButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/backSongButton"
+        app:srcCompat="@drawable/play_circle_24" />
+
+    <ImageButton
+        android:id="@+id/stopButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nextSongButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/backSongButton"
+        app:srcCompat="@drawable/pause_circle_24" />
+
+    <ImageButton
+        android:id="@+id/nextSongButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="next"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/shuffleButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/playButton"
+        app:srcCompat="@drawable/next_24" />
+
+    <ImageButton
+        android:id="@+id/shuffleButton"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="shuffle"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageButton
-            android:id="@+id/listButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:contentDescription="list"
-            android:minWidth="50dp"
-            android:minHeight="50dp"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/list_24" />
-
-        <ImageButton
-            android:id="@+id/backSongButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="45dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="next"
-            android:minWidth="70dp"
-            android:minHeight="70dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/skip_previous_24" />
-
-        <ImageButton
-            android:id="@+id/playButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:contentDescription="play"
-            android:minWidth="70dp"
-            android:minHeight="70dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/play_circle_24" />
-
-
-
-        <ImageButton
-            android:id="@+id/nextSongButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="40dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="next"
-            android:minWidth="70dp"
-            android:minHeight="70dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/next_24" />
-
-        <ImageButton
-            android:id="@+id/shuffleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:contentDescription="shuffle"
-            android:minWidth="45dp"
-            android:minHeight="45dp"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/baseline_shuffle_24" />
-    </LinearLayout>
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/nextSongButton"
+        app:srcCompat="@drawable/baseline_shuffle_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
