@@ -95,10 +95,10 @@
                 android:id="@+id/playDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:gravity="left"
                 android:text="00:00"
-                android:textSize="15sp"></TextView>
+                android:textSize="15sp"/>
 
             <View
                 android:layout_width="0dp"
@@ -109,10 +109,10 @@
                 android:id="@+id/totalDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
                 android:gravity="right"
                 android:text="00:00"
-                android:textSize="15sp"></TextView>
+                android:textSize="15sp"/>
         </LinearLayout>
 
         <SeekBar
@@ -169,6 +169,8 @@
             android:minHeight="70dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/play_circle_24" />
+
+
 
         <ImageButton
             android:id="@+id/nextSongButton"

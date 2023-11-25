@@ -23,6 +23,10 @@ class MediaPlayerService : Service() {
         return null
         //바인드 서비스가 아닌 포그라운드 서비스를 구현할거라 사용하지 않을 예정
     }
+    companion object {
+        const val ACTION_TOGGLE_PLAYBACK = "com.myungwoo.mp3playerondb.action.TOGGLE_PLAYBACK"
+        const val ACTION_STOP_PLAYBACK = "com.myungwoo.mp3playerondb.action.STOP_PLAYBACK"
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -84,9 +88,7 @@ class MediaPlayerService : Service() {
         } else {
             notificationBuilder.notification
         }
-
         startForeground(100, notification)
-
     }
 
     private fun createNotificationChannel() {
@@ -105,34 +107,37 @@ class MediaPlayerService : Service() {
 
     //서비스가 실행이 되고 oncreate가 된 다음에 불러오는 것
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val shardMusicData = intent?.getParcelableExtra<MusicData>("musicData")
-        Log.e("서비스에 있는 뮤직데이터", shardMusicData.toString())
-
         when (intent?.action) {
-            MEDIA_PLAYER_PLAY -> {
-                if (mediaPlayer == null) {
-                    // 음악 파일객체 가져옴
-                    mediaPlayer = MediaPlayer.create(baseContext, shardMusicData?.getMusicUri())
-                    Log.e("서비스에 있는 뮤직데이터2", mediaPlayer.toString())
+            ACTION_TOGGLE_PLAYBACK -> {
+                val musicData = intent.getParcelableExtra<MusicData>("musicData")
+                if (musicData != null) {
+                    togglePlayback(musicData)
                 }
-                    mediaPlayer?.start()
-
             }
-
-            MEDIA_PLAYER_PAUSE -> {
-                Log.e("서비스 진행중", "일시 멈춤")
-                mediaPlayer?.pause()
-            }
-
-            MEDIA_PLAYER_STOP -> {
-                Log.e("서비스 진행중", "정지")
-                mediaPlayer?.stop() //멈추기
-                mediaPlayer?.release() // 할당된 메모리해제
-                mediaPlayer = null
-                stopSelf()
+            ACTION_STOP_PLAYBACK -> {
+                stopPlayback()
             }
         }
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    private fun togglePlayback(musicData: MusicData) {
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(baseContext, musicData.getMusicUri())
+        }
+
+        if (mediaPlayer?.isPlaying == true) {
+            mediaPlayer?.pause()
+        } else {
+            mediaPlayer?.start()
+        }
+    }
+
+    private fun stopPlayback() {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+        stopSelf()
     }
 
 

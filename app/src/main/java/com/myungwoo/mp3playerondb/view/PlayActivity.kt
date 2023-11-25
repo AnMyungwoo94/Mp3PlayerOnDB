@@ -1,6 +1,7 @@
 package com.myungwoo.mp3playerondb.view
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,12 +12,14 @@ import android.widget.SeekBar
 import com.myungwoo.mp3playerondb.data.MusicData
 import com.myungwoo.mp3playerondb.R
 import com.myungwoo.mp3playerondb.databinding.ActivityPlayBinding
+import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_PAUSE
 import com.myungwoo.mp3playerondb.service.MEDIA_PLAYER_PLAY
 import com.myungwoo.mp3playerondb.service.MediaPlayerService
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 
 class PlayActivity : AppCompatActivity(), View.OnClickListener {
+    private var mediaPlayer: MediaPlayer? = null
     private lateinit var binding: ActivityPlayBinding
     private lateinit var musicData: MusicData
     private var playList: MutableList<Parcelable>? = null
@@ -24,7 +27,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
     private val ALBUM_IMAGE_SIZE = 100
     private var mp3playerJob: Job? = null
     private var pauseFlag = false
-    var mediaPlayer: MediaPlayer? = null
+    private val filter = IntentFilter("media_control") //상단바에서 음악 제어하기하고, 엑티비티 UI변경을 위해
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +71,6 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     mediaPlayer?.seekTo(progress)
                 }
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
@@ -77,36 +79,27 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.listButton -> {
-//                val intent = Intent(this, MediaPlayerService::class.java)
-//                    .apply { action = MEDIA_PLAYER_LIST }
-//                startService(intent)
-
                 //전체 목록으로 가는 버튼
                 mp3playerJob?.cancel()
-                mediaPlayer?.stop() //멈추기
-                mediaPlayer?.release() // 할당된 메모리해제
+               mediaPlayer?.stop() //멈추기
+               mediaPlayer?.release() // 할당된 메모리해제
                 mediaPlayer = null
                 finish() //끝내기
             }
 
             R.id.playButton -> {
-                val intent = Intent(this, MediaPlayerService::class.java)
-                    .apply { action = MEDIA_PLAYER_PLAY }
-                intent.putExtra("musicData", musicData)
-                startService(intent)
-
-                if (mediaPlayer!!.isPlaying) {
+                if (mediaPlayer?.isPlaying == true) {
 //                    val intent = Intent(this, MediaPlayerService::class.java)
 //                        .apply { action = MEDIA_PLAYER_PAUSE }
+//                    intent.putExtra("musicData", musicData)
 //                    startService(intent)
-
-                    mediaPlayer?.pause() // 멈추기
                     binding.playButton.setImageResource(R.drawable.play_circle_24)
                     pauseFlag = true
-
                 } else {
-                    //노래 재생
-                    mediaPlayer?.start()
+                    val intent = Intent(this, MediaPlayerService::class.java)
+                        .apply { action = MEDIA_PLAYER_PLAY }
+                    intent.putExtra("musicData", musicData)
+                    startService(intent)
                     binding.playButton.setImageResource(R.drawable.pause_circle_24)
                     pauseFlag = false
 
@@ -114,7 +107,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     val backgroundScope = CoroutineScope(Dispatchers.Default + Job())
                     mp3playerJob = backgroundScope.launch {
                         while (mediaPlayer!!.isPlaying) {
-                            var currentPosition = mediaPlayer?.currentPosition!!
+                            var currentPosition =mediaPlayer?.currentPosition!!
                             // 코루틴속에서 화면의 값을 변동시키고자 할 때 runOnUiThread 사용
                             var strCurrentPosition =
                                 SimpleDateFormat("mm:ss").format(mediaPlayer?.currentPosition)
@@ -141,7 +134,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                                     currentposition = 0
                                 }
                                 setReplay()
-                                start()
+                                playmusic()
                             }
                         }
                     }
@@ -155,7 +148,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     currentposition = 0
                 }
                 setReplay()
-                start()
+                playmusic()
             }
 
             R.id.backSongButton -> {
@@ -165,145 +158,17 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     --currentposition
                 }
                 setReplay()
-                start()
+                playmusic()
             }
 
             R.id.shuffleButton -> {
                 currentposition = (Math.random() * playList!!.size).toInt()
                 setReplay()
-                start()
+                playmusic()
             }
         }
     }
 
-
-//    fun handleMediaAction(action: String) {
-//        when (action) {
-//            MEDIA_PLAYER_LIST -> {
-//                val intent = Intent(this, MediaPlayerService::class.java)
-//                intent.action = MEDIA_PLAYER_LIST
-//                sendBroadcast(intent)
-//
-//                //전체 목록으로 가는 버튼
-//                mp3playerJob?.cancel()
-//                mediaPlayer?.stop() //멈추기
-//                mediaPlayer?.release() // 할당된 메모리해제
-//                mediaPlayer = null
-//                finish() //끝내기
-//            }
-//
-//            MEDIA_PLAYER_PLAY -> {
-//                val intent = Intent(this, MediaPlayerService::class.java)
-//                intent.action = MEDIA_PLAYER_PLAY
-//                sendBroadcast(intent)
-//
-//                if (mediaPlayer!!.isPlaying) {
-//                    val intent = Intent(this, MediaPlayerService::class.java)
-//                    intent.action = MEDIA_PLAYER_PAUSE
-//                    sendBroadcast(intent)
-//
-//                    mediaPlayer?.pause() // 멈추기
-//                    binding.playButton.setImageResource(R.drawable.play_circle_24)
-//                    pauseFlag = true
-//
-//                } else {
-//                    //노래 재생
-//                    mediaPlayer?.start()
-//                    binding.playButton.setImageResource(R.drawable.pause_circle_24)
-//                    pauseFlag = false
-//
-//                    // 코루틴으로 음악을 재생
-//                    val backgroundScope = CoroutineScope(Dispatchers.Default + Job())
-//                    mp3playerJob = backgroundScope.launch {
-//                        while (mediaPlayer!!.isPlaying) {
-//                            var currentPosition = mediaPlayer?.currentPosition!!
-//                            // 코루틴속에서 화면의 값을 변동시키고자 할 때 runOnUiThread 사용
-//                            var strCurrentPosition =
-//                                SimpleDateFormat("mm:ss").format(mediaPlayer?.currentPosition)
-//                            runOnUiThread {
-//                                binding.seekBar.progress = currentPosition
-//                                binding.playDuration.text = strCurrentPosition
-//                            }
-//                            try {
-//                                delay(1000)
-//                                binding.seekBar.incrementProgressBy(1000)
-//                            } catch (e: java.lang.Exception) {
-//                                Log.e("PlayActivity", "delay 오류발생 ${e.printStackTrace()}")
-//                            }
-//                        }
-//                        if (!pauseFlag) {
-//                            runOnUiThread {
-//                                binding.seekBar.progress = 0
-//                                binding.playButton.setImageResource(R.drawable.play_circle_24)
-//                                binding.playDuration.text = "00:00"
-//                                //노래가 끝나면 다음곡으로 재생하게끔 진행(없으면 현재곡에서 멈춤)
-//                                if (currentposition < playList!!.size - 1) {
-//                                    ++currentposition
-//                                } else {
-//                                    currentposition = 0
-//                                }
-//                                setReplay()
-//                                start()
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            MEDIA_PLAYER_NEXT -> {
-//                val intent = Intent(this, MediaPlayerService::class.java)
-//                intent.action = MEDIA_PLAYER_NEXT
-//                sendBroadcast(intent)
-//
-//                if (currentposition < playList!!.size - 1) {
-//                    ++currentposition
-//                } else {
-//                    currentposition = 0
-//                }
-//                setReplay()
-//                start()
-//            }
-//
-//            MEDIA_PLAYER_BACK -> {
-//
-//                val intent = Intent(this, MediaPlayerService::class.java)
-//                intent.action = MEDIA_PLAYER_BACK
-//                sendBroadcast(intent)
-//
-//                if (currentposition == 0) {
-//                    currentposition = playList!!.size - 1
-//                } else {
-//                    --currentposition
-//                }
-//                setReplay()
-//                start()
-//            }
-//
-//            MEDIA_PLAYER_SHUFFLE -> {
-//
-//                val intent = Intent(this, MediaPlayerService::class.java)
-//                intent.action = MEDIA_PLAYER_SHUFFLE
-//                sendBroadcast(intent)
-//
-//                currentposition = (Math.random() * playList!!.size).toInt()
-//                setReplay()
-//                start()
-//            }
-//
-//            MEDIA_PLAYER_STOP -> {
-//                val intent = Intent(this, MediaPlayerService::class.java)
-//                intent.action = MEDIA_PLAYER_STOP
-//                Log.e("스탑", "스탑")
-//                sendBroadcast(intent)
-//
-//                mp3playerJob?.cancel()
-//                mediaPlayer?.stop() //멈추기
-//                mediaPlayer?.release() // 할당된 메모리해제
-//                mediaPlayer = null
-//                finish()
-//            }
-//        }
-//    }
 
     private fun setReplay() {
         mediaPlayer?.stop()
@@ -328,10 +193,9 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun start() {
+    private fun playmusic() {
         //노래 재생
         mediaPlayer?.start()
-        binding.playButton.setImageResource(R.drawable.pause_circle_24)
         pauseFlag = false
 
         // 코루틴으로 음악을 재생
@@ -345,6 +209,13 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                 runOnUiThread {
                     binding.seekBar.progress = currentPosition
                     binding.playDuration.text = strCurrentPosition
+
+                    // mediaPlayer의 재생 상태에 따라 재생 버튼 이미지 변경
+                    if (mediaPlayer!!.isPlaying) {
+                        binding.playButton.setImageResource(R.drawable.pause_circle_24)
+                    } else {
+                        binding.playButton.setImageResource(R.drawable.play_circle_24)
+                    }
                 }
                 try {
                     delay(1000)
@@ -365,8 +236,16 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         mp3playerJob?.cancel()
-        mediaPlayer?.stop()
+       mediaPlayer?.stop()
         finish()
     }
-
+    override fun onDestroy() {
+        super.onDestroy()
+        mp3playerJob?.cancel()
+        mediaPlayer?.stop() //멈추기
+       mediaPlayer?.release() // 할당된 메모리해제
+       mediaPlayer = null
+        finish() //끝내기
+        Log.e("라이프사이클", "onDestroy()")
+    }
 }
