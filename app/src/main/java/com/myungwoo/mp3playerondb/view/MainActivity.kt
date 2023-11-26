@@ -183,11 +183,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         //1. 액션바대신에 툴바로 대체한다.
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding.toolbarMain)
 
         mainRecyclerAdapter = MainRecyclerAdapter(this, musicDataList!!)
-        binding.recyclerView.adapter = mainRecyclerAdapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.rvMainMusicList.adapter = mainRecyclerAdapter
+        binding.rvMainMusicList.layoutManager = LinearLayoutManager(this)
 
         //Adapter와 Subitem_recycler 연결
         subItemDataList = mutableListOf<SubItemData>()
@@ -196,16 +196,16 @@ class MainActivity : AppCompatActivity() {
         subItemDataList.add(SubItemData(R.drawable.iv_movieposter3, "https://www.youtube.com/watch?v=LoRwHdN7H1g"))
         subItemDataList.add(SubItemData(R.drawable.iv_movieposter4, "https://www.youtube.com/watch?v=EkRuV-h6Bv0"))
 
-        binding.recyclerViewMain.adapter = SubWebviewAdapter(this,subItemDataList)
-        binding.recyclerViewMain.layoutManager =
+        binding.rvMainOst.adapter = SubWebviewAdapter(this,subItemDataList)
+        binding.rvMainOst.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         //***************메인 버튼 클릭시 이벤트*******************
-        binding.btnYoutube.setOnClickListener {
+        binding.btnMainYoutube.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com"))
             startActivity(intent)
         }
-        binding.btnAsmr.setOnClickListener {
+        binding.btnMainAsmr.setOnClickListener {
             val intent = Intent(this, AsmrActivity::class.java)
             startActivity(intent)
         }

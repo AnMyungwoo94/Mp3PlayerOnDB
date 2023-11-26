@@ -29,8 +29,8 @@ class AsmrActivity : AppCompatActivity() {
         dataList.add(AsmrData("숲소리",R.drawable.iv_forest_asmr, R.drawable.ic_play_asmr_24,"https://bit.ly/3GHVKAo"))
         dataList.add(AsmrData("바다소리",R.drawable.iv_thesea_asmr, R.drawable.ic_play_asmr_24,"https://bit.ly/3ohbUdJ"))
 
-        binding.recyclerview.adapter = AsmrWebviewAdapter(this,dataList)
-        binding.recyclerview.layoutManager = LinearLayoutManager(this,
+        binding.rvAsmr.adapter = AsmrWebviewAdapter(this,dataList)
+        binding.rvAsmr.layoutManager = LinearLayoutManager(this,
             LinearLayoutManager.VERTICAL,false
         )
     }

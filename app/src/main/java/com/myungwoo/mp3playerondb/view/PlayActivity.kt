@@ -28,32 +28,32 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityPlayBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //액션바 툴바로 변경
-        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding.toolbarPlay)
 
         playList = intent.getParcelableArrayListExtra("parcelableList")
         currentposition = intent.getIntExtra("position", 0)
         musicData = playList?.get(currentposition) as MusicData
-        binding.seekBar.max = Int.MAX_VALUE
-        binding.albumTitle.text = musicData.title
-        binding.albumArtist.text = musicData.artist
-        binding.totalDuration.text = SimpleDateFormat("mm:ss").format(musicData.duration)
-        binding.playDuration.text = "00:00"
+        binding.sbPlay.max = Int.MAX_VALUE
+        binding.tvPlayAlbumTitle.text = musicData.title
+        binding.tvPlayAlbumArtist.text = musicData.artist
+        binding.tvPlayTotalDuration.text = SimpleDateFormat("mm:ss").format(musicData.duration)
+        binding.tvPlayDuration.text = "00:00"
         val bitmap = musicData.getAlbumBitmap(this, ALBUM_IMAGE_SIZE)
         if (bitmap != null) {
-            binding.albumImage.setImageBitmap(bitmap)
+            binding.cvPlayAlbumImage.setImageBitmap(bitmap)
         } else {
-            binding.albumImage.setImageResource(R.drawable.iv_music)
+            binding.cvPlayAlbumImage.setImageResource(R.drawable.iv_music)
         }
         //음악 데이터 가져오기
         mediaPlayer = MediaPlayer.create(this, musicData.getMusicUri())
 
-        binding.listButton.setOnClickListener(this)
-        binding.playButton.setOnClickListener(this)
-        binding.nextSongButton.setOnClickListener(this)
-        binding.backSongButton.setOnClickListener(this)
-        binding.shuffleButton.setOnClickListener(this)
-        binding.seekBar.max = mediaPlayer!!.duration
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.ibPlayAllList.setOnClickListener(this)
+        binding.ibPlayPlay.setOnClickListener(this)
+        binding.ibPlayNextSong.setOnClickListener(this)
+        binding.ibPlayBackSong.setOnClickListener(this)
+        binding.ibPlayShuffle.setOnClickListener(this)
+        binding.sbPlay.max = mediaPlayer!!.duration
+        binding.sbPlay.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(
                 seekBar: SeekBar?,
                 progress: Int,
@@ -72,7 +72,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.listButton -> {
+            R.id.ib_play_all_list -> {
                 mp3playerJob?.cancel()
                 mediaPlayer?.stop()
                 mediaPlayer?.release()
@@ -80,14 +80,14 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                 finish()
             }
 
-            R.id.playButton -> {
+            R.id.ib_play_play -> {
                 if (mediaPlayer?.isPlaying == true) {
                     mediaPlayer?.pause()
-                    binding.playButton.setImageResource(R.drawable.ic_play_circle_24)
+                    binding.ibPlayPlay.setImageResource(R.drawable.ic_play_circle_24)
                     pauseFlag = true
                 } else {
                     mediaPlayer?.start()
-                    binding.playButton.setImageResource(R.drawable.ic_pause_24)
+                    binding.ibPlayPlay.setImageResource(R.drawable.ic_pause_24)
                     pauseFlag = false
                     playMusic()
 
@@ -101,11 +101,11 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
 
-            R.id.nextSongButton -> {
+            R.id.ib_play_next_song -> {
                 nextSong()
             }
 
-            R.id.backSongButton -> {
+            R.id.ib_play_back_song -> {
                 if (currentposition == 0) {
                     currentposition = playList!!.size - 1
                 } else {
@@ -116,7 +116,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                 playMusic()
             }
 
-            R.id.shuffleButton -> {
+            R.id.ib_play_shuffle -> {
                 currentposition = (Math.random() * playList!!.size).toInt()
                 setReplay()
                 mediaPlayer?.start()
@@ -130,17 +130,17 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         mp3playerJob?.cancel()
         musicData = playList?.get(currentposition) as MusicData
         mediaPlayer = MediaPlayer.create(this, musicData?.getMusicUri())
-        binding.seekBar.progress = 0
-        binding.playDuration.text = "00:00"
-        binding.albumTitle.text = musicData?.title
-        binding.albumArtist.text = musicData?.artist
-        binding.totalDuration.text = SimpleDateFormat("mm:ss").format(musicData?.duration)
-        binding.playDuration.text = "00:00"
+        binding.sbPlay.progress = 0
+        binding.tvPlayDuration.text = "00:00"
+        binding.tvPlayAlbumTitle.text = musicData?.title
+        binding.tvPlayAlbumArtist.text = musicData?.artist
+        binding.tvPlayTotalDuration.text = SimpleDateFormat("mm:ss").format(musicData?.duration)
+        binding.tvPlayDuration.text = "00:00"
         val bitmap = musicData?.getAlbumBitmap(this, ALBUM_IMAGE_SIZE)
         if (bitmap != null) {
-            binding.albumImage.setImageBitmap(bitmap)
+            binding.cvPlayAlbumImage.setImageBitmap(bitmap)
         } else {
-            binding.albumImage.setImageResource(R.drawable.iv_music)
+            binding.cvPlayAlbumImage.setImageResource(R.drawable.iv_music)
         }
     }
 
@@ -152,14 +152,14 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                 var strCurrentPosition =
                     SimpleDateFormat("mm:ss").format(mediaPlayer?.currentPosition)
                 runOnUiThread {
-                    binding.seekBar.progress = currentPosition
-                    binding.playDuration.text = strCurrentPosition
+                    binding.sbPlay.progress = currentPosition
+                    binding.tvPlayDuration.text = strCurrentPosition
 
                     // mediaPlayer의 재생 상태에 따라 재생 버튼 이미지 변경
                     if (mediaPlayer!!.isPlaying) {
-                        binding.playButton.setImageResource(R.drawable.ic_pause_24)
+                        binding.ibPlayPlay.setImageResource(R.drawable.ic_pause_24)
                     } else {
-                        binding.playButton.setImageResource(R.drawable.ic_play_circle_24)
+                        binding.ibPlayPlay.setImageResource(R.drawable.ic_play_circle_24)
                     }
 
                     // 뷰를 갱신
@@ -173,9 +173,9 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
             }
             if (!pauseFlag) {
                 runOnUiThread {
-                    binding.seekBar.progress = 0
-                    binding.playButton.setImageResource(R.drawable.ic_play_circle_24)
-                    binding.playDuration.text = "00:00"
+                    binding.sbPlay.progress = 0
+                    binding.ibPlayPlay.setImageResource(R.drawable.ic_play_circle_24)
+                    binding.tvPlayDuration.text = "00:00"
                     // 뷰를 갱신
                     binding.root.invalidate()
                 }
