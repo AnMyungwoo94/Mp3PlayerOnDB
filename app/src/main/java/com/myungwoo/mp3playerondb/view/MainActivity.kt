@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
+        menuInflater.inflate(R.menu.menu_item, menu)
 
         //메뉴에서 서치객체 찾음
         val searchMenu = menu?.findItem(R.id.menu_search)
@@ -191,10 +191,10 @@ class MainActivity : AppCompatActivity() {
 
         //Adapter와 Subitem_recycler 연결
         subItemDataList = mutableListOf<SubItemData>()
-        subItemDataList.add(SubItemData(R.drawable.movieposter1, "https://www.youtube.com/watch?v=0r85vZIzayg"))
-        subItemDataList.add(SubItemData(R.drawable.movieposter2, "https://www.youtube.com/watch?v=YIPz1JpaXDc"))
-        subItemDataList.add(SubItemData(R.drawable.movieposter3, "https://www.youtube.com/watch?v=LoRwHdN7H1g"))
-        subItemDataList.add(SubItemData(R.drawable.movieposter4, "https://www.youtube.com/watch?v=EkRuV-h6Bv0"))
+        subItemDataList.add(SubItemData(R.drawable.iv_movieposter1, "https://www.youtube.com/watch?v=0r85vZIzayg"))
+        subItemDataList.add(SubItemData(R.drawable.iv_movieposter2, "https://www.youtube.com/watch?v=YIPz1JpaXDc"))
+        subItemDataList.add(SubItemData(R.drawable.iv_movieposter3, "https://www.youtube.com/watch?v=LoRwHdN7H1g"))
+        subItemDataList.add(SubItemData(R.drawable.iv_movieposter4, "https://www.youtube.com/watch?v=EkRuV-h6Bv0"))
 
         binding.recyclerViewMain.adapter = SubWebviewAdapter(this,subItemDataList)
         binding.recyclerViewMain.layoutManager =

@@ -22,7 +22,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/music" />
+        app:srcCompat="@drawable/iv_music" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -62,6 +62,6 @@
         app:layout_constraintBottom_toTopOf="@+id/tvDuration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/favorite_24" />
+        app:srcCompat="@drawable/ic_favorite_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

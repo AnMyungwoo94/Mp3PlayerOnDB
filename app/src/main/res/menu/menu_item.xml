@@ -3,25 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_recode"
-        android:icon="@drawable/record_main"
+        android:icon="@drawable/ic_record_main"
         android:title="녹음"
         android:iconTint="@color/black"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_like"
-        android:icon="@drawable/favorite_like_24"
+        android:icon="@drawable/ic_favorite_like_24"
         android:title="좋아요"
         android:iconTint="@color/black"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_main"
-        android:icon="@drawable/alt_24"
+        android:icon="@drawable/ic_music_list"
         android:title="전체보기"
         android:iconTint="@color/black"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_search"
-        android:icon="@drawable/baseline_search_24"
+        android:icon="@drawable/ic_search_24"
         android:title="Search"
         android:iconTint="@color/black"
         app:actionViewClass="android.widget.SearchView"

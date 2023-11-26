@@ -36,14 +36,14 @@ class MainRecyclerAdapter(val context:Context, val musicList:MutableList<MusicDa
         if(bitmap != null){
             binding.ivAlbumArt.setImageBitmap(bitmap)
         }else{
-            binding.ivAlbumArt.setImageResource(R.drawable.music)
+            binding.ivAlbumArt.setImageResource(R.drawable.iv_music)
         }
         binding.tvArtist.text = musicList.get(position).artist
         binding.tvTitle.text = musicList.get(position).title
         binding.tvDuration.text = SimpleDateFormat("mm:ss").format(musicList.get(position).duration)
         when(musicList.get(position).likes){
-            0-> binding.ivItemLike.setImageResource(R.drawable.favorite_24)
-            1-> binding.ivItemLike.setImageResource(R.drawable.favorite_like_24)
+            0-> binding.ivItemLike.setImageResource(R.drawable.ic_favorite_24)
+            1-> binding.ivItemLike.setImageResource(R.drawable.ic_favorite_like_24)
         }
 
         // 아이템항목 클릭 시 PlayActivity MusicData 전달
@@ -67,11 +67,11 @@ class MainRecyclerAdapter(val context:Context, val musicList:MutableList<MusicDa
             when(musicList.get(position).likes){
                 0->{
                     musicList.get(position).likes = 1
-                    binding.ivItemLike.setImageResource(R.drawable.favorite_like_24)
+                    binding.ivItemLike.setImageResource(R.drawable.ic_favorite_like_24)
                 }
                 1->{
                     musicList.get(position).likes = 0
-                    binding.ivItemLike.setImageResource(R.drawable.favorite_24)
+                    binding.ivItemLike.setImageResource(R.drawable.ic_favorite_24)
                 }
             }
         val db = DBOpenHelper(context, MainActivity.DB_NAME, MainActivity.VERSION)

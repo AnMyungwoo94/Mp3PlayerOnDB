@@ -42,7 +42,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         if (bitmap != null) {
             binding.albumImage.setImageBitmap(bitmap)
         } else {
-            binding.albumImage.setImageResource(R.drawable.music)
+            binding.albumImage.setImageResource(R.drawable.iv_music)
         }
         //음악 데이터 가져오기
         mediaPlayer = MediaPlayer.create(this, musicData.getMusicUri())
@@ -83,11 +83,11 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
             R.id.playButton -> {
                 if (mediaPlayer?.isPlaying == true) {
                     mediaPlayer?.pause()
-                    binding.playButton.setImageResource(R.drawable.play_circle_24)
+                    binding.playButton.setImageResource(R.drawable.ic_play_circle_24)
                     pauseFlag = true
                 } else {
                     mediaPlayer?.start()
-                    binding.playButton.setImageResource(R.drawable.pause_circle_24)
+                    binding.playButton.setImageResource(R.drawable.ic_pause_24)
                     pauseFlag = false
                     playMusic()
 
@@ -140,7 +140,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         if (bitmap != null) {
             binding.albumImage.setImageBitmap(bitmap)
         } else {
-            binding.albumImage.setImageResource(R.drawable.music)
+            binding.albumImage.setImageResource(R.drawable.iv_music)
         }
     }
 
@@ -157,9 +157,9 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
 
                     // mediaPlayer의 재생 상태에 따라 재생 버튼 이미지 변경
                     if (mediaPlayer!!.isPlaying) {
-                        binding.playButton.setImageResource(R.drawable.pause_circle_24)
+                        binding.playButton.setImageResource(R.drawable.ic_pause_24)
                     } else {
-                        binding.playButton.setImageResource(R.drawable.play_circle_24)
+                        binding.playButton.setImageResource(R.drawable.ic_play_circle_24)
                     }
 
                     // 뷰를 갱신
@@ -174,7 +174,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
             if (!pauseFlag) {
                 runOnUiThread {
                     binding.seekBar.progress = 0
-                    binding.playButton.setImageResource(R.drawable.play_circle_24)
+                    binding.playButton.setImageResource(R.drawable.ic_play_circle_24)
                     binding.playDuration.text = "00:00"
                     // 뷰를 갱신
                     binding.root.invalidate()

@@ -23,7 +23,7 @@
         android:layout_marginTop="16dp"
         android:layout_weight="5"
         android:background="@android:color/transparent"
-        android:src="@drawable/music"
+        android:src="@drawable/iv_music"
         app:civ_border_color="#000000"
         app:civ_border_overlay="true"
         app:civ_border_width="0dp"
@@ -111,7 +111,7 @@
         android:contentDescription="list"
         android:padding="5dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/list_24"
+        android:src="@drawable/ic_list_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/backSongButton"
         app:layout_constraintHorizontal_bias="0.5"
@@ -131,7 +131,7 @@
         app:layout_constraintEnd_toStartOf="@+id/playButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/listButton"
-        app:srcCompat="@drawable/skip_previous_24" />
+        app:srcCompat="@drawable/ic_previous_24" />
 
     <ImageButton
         android:id="@+id/playButton"
@@ -145,7 +145,7 @@
         app:layout_constraintEnd_toStartOf="@+id/nextSongButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/backSongButton"
-        app:srcCompat="@drawable/play_circle_24" />
+        app:srcCompat="@drawable/ic_play_circle_24" />
 
     <ImageButton
         android:id="@+id/stopButton"
@@ -159,7 +159,7 @@
         app:layout_constraintEnd_toStartOf="@+id/nextSongButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/backSongButton"
-        app:srcCompat="@drawable/pause_circle_24" />
+        app:srcCompat="@drawable/ic_pause_24" />
 
     <ImageButton
         android:id="@+id/nextSongButton"
@@ -173,7 +173,7 @@
         app:layout_constraintEnd_toStartOf="@+id/shuffleButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/playButton"
-        app:srcCompat="@drawable/next_24" />
+        app:srcCompat="@drawable/ic_next_24" />
 
     <ImageButton
         android:id="@+id/shuffleButton"
@@ -187,5 +187,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/nextSongButton"
-        app:srcCompat="@drawable/baseline_shuffle_24" />
+        app:srcCompat="@drawable/ic_shuffle_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

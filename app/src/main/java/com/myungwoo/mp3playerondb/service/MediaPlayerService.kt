@@ -11,7 +11,6 @@ import android.media.MediaPlayer
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.myungwoo.mp3playerondb.data.MusicData
@@ -56,7 +55,7 @@ class MediaPlayerService : Service() {
 
         createNotificationChannel()
 
-       playIcon = Icon.createWithResource(baseContext, R.drawable.play_circle_24)
+       playIcon = Icon.createWithResource(baseContext, R.drawable.ic_play_circle_24)
         playPendingIntent = PendingIntent.getService(
             baseContext,
             0,
@@ -66,7 +65,7 @@ class MediaPlayerService : Service() {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        pauseIcon = Icon.createWithResource(baseContext, R.drawable.pause_circle_24)
+        pauseIcon = Icon.createWithResource(baseContext, R.drawable.ic_pause_24)
         pausePendingIntent = PendingIntent.getService(
             baseContext,
             0,
@@ -76,7 +75,7 @@ class MediaPlayerService : Service() {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        stopIcon = Icon.createWithResource(baseContext, R.drawable.stop_circle_24)
+        stopIcon = Icon.createWithResource(baseContext, R.drawable.ic_record_stop_24)
       stopPendingIntent = PendingIntent.getService(
             baseContext,
             0,
@@ -98,7 +97,7 @@ class MediaPlayerService : Service() {
         val notificationBuilder = Notification.Builder(baseContext, CHANNEL_ID)
             .setStyle(Notification.MediaStyle().setShowActionsInCompactView(0, 1, 2))
             .setVisibility(Notification.VISIBILITY_PUBLIC)
-            .setSmallIcon(R.drawable.play_asmr_24)
+            .setSmallIcon(R.drawable.ic_play_asmr_24)
             .addAction(Notification.Action.Builder(playIcon, "재생", playPendingIntent).build())
             .addAction(Notification.Action.Builder(pauseIcon, "멈춤", pausePendingIntent).build())
             .addAction(Notification.Action.Builder(stopIcon, "정지", stopPendingIntent).build())
@@ -149,7 +148,7 @@ class MediaPlayerService : Service() {
         // 수정된 부분: 노티피케이션 업데이트 함수 호출
         updateNotification(
             NotificationCompat.Action.Builder(
-                R.drawable.pause_circle_24,
+                R.drawable.ic_pause_24,
                 "멈춤",
                 pausePendingIntent
             ).build()
@@ -166,7 +165,7 @@ class MediaPlayerService : Service() {
             mediaPlayer?.pause()
             updateNotification(
                 NotificationCompat.Action.Builder(
-                    R.drawable.play_circle_24,
+                    R.drawable.ic_play_circle_24,
                     "재생",
                     playPendingIntent
                 ).build()
@@ -175,7 +174,7 @@ class MediaPlayerService : Service() {
             mediaPlayer?.start()
             updateNotification(
                 NotificationCompat.Action.Builder(
-                    R.drawable.pause_circle_24,
+                    R.drawable.ic_pause_24,
                     "멈춤",
                     pausePendingIntent
                 ).build()
@@ -187,7 +186,7 @@ class MediaPlayerService : Service() {
         mediaPlayer?.pause()
         updateNotification(
             NotificationCompat.Action.Builder(
-                R.drawable.play_circle_24,
+                R.drawable.ic_play_circle_24,
                 "재생",
                 playPendingIntent
             ).build()
@@ -208,18 +207,18 @@ class MediaPlayerService : Service() {
                     .setShowActionsInCompactView(0, 1, 2)
             )
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setSmallIcon(R.drawable.play_asmr_24)
+            .setSmallIcon(R.drawable.ic_play_asmr_24)
             .addAction(action)
             .addAction(
                 NotificationCompat.Action.Builder(
-                    IconCompat.createWithResource(baseContext, R.drawable.pause_circle_24),
+                    IconCompat.createWithResource(baseContext, R.drawable.ic_pause_24),
                     "멈춤",
                     pausePendingIntent
                 ).build()
             )
             .addAction(
                 NotificationCompat.Action.Builder(
-                    IconCompat.createWithResource(baseContext, R.drawable.stop_circle_24),
+                    IconCompat.createWithResource(baseContext, R.drawable.ic_record_stop_24),
                     "정지",
                     stopPendingIntent
                 ).build()

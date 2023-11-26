@@ -23,6 +23,6 @@
             android:adjustViewBounds="true"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            app:srcCompat="@drawable/music" />
+            app:srcCompat="@drawable/iv_music" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

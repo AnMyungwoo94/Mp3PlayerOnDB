@@ -148,7 +148,7 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
         //recorder?.maxAmplitude?.toFloat() 원래 이거 사용했다가 아래로 변경 흐름상
         binding.recordButton.setImageDrawable(
             ContextCompat.getDrawable(
-                this, R.drawable.ic_baseline_stop_24
+                this, R.drawable.ic_record_stop_24
             )
         )
         //오디오 실행시 버튼 조절하기
@@ -168,7 +168,7 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
 
         binding.recordButton.setImageDrawable(
             ContextCompat.getDrawable(
-                this, R.drawable.ic_baseline_fiber_manual_record_24
+                this, R.drawable.ic_record_24
             )
         )
         binding.recordButton.imageTintList = ColorStateList.valueOf(Color.RED)
