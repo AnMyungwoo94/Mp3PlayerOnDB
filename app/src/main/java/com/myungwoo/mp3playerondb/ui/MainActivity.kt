@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.view
+package com.myungwoo.mp3playerondb.ui
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -30,16 +30,26 @@ class MainActivity : AppCompatActivity() {
         val DB_NAME = "musicDB2"
         val VERSION = 1
     }
+
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    //데이타베이스 생성
     private val dbOpenHelper by lazy { DBOpenHelper(this, DB_NAME, VERSION) }
-    val permission = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-    val permission_sdk33 = arrayOf(android.Manifest.permission.READ_MEDIA_AUDIO)
-    var musicDataList: MutableList<MusicData>? = mutableListOf<MusicData>()
-    lateinit var mainRecyclerAdapter: MainRecyclerAdapter
-    lateinit var subRecyclerAdapter: SubRecyclerAdapter
-    lateinit var subItemDataList: MutableList<SubItemData>
+    private val permission = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val permission_sdk33 = arrayOf(android.Manifest.permission.READ_MEDIA_AUDIO)
+    private var musicDataList: MutableList<MusicData>? = mutableListOf<MusicData>()
+    private lateinit var mainRecyclerAdapter: MainRecyclerAdapter
+    private lateinit var subRecyclerAdapter: SubRecyclerAdapter
+    private lateinit var subItemDataList: MutableList<SubItemData>
+    private var isDialogShown = false
+
+    override fun onResume() {
+        super.onResume()
+        if (!isDialogShown) {
+            val dialogFragment = DialogFragment()
+            dialogFragment.show(supportFragmentManager, "dialogFragment")
+            isDialogShown = true
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +61,9 @@ class MainActivity : AppCompatActivity() {
             startProcess()
         } else {
 //            //승인요청
-            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.TIRAMISU) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 ActivityCompat.requestPermissions(this, permission_sdk33, REQUEST_CODE)
-            } else{
+            } else {
                 ActivityCompat.requestPermissions(this, permission, REQUEST_CODE)
             }
 
@@ -101,6 +111,7 @@ class MainActivity : AppCompatActivity() {
                     mainRecyclerAdapter.notifyDataSetChanged()
                 }
             }
+
             R.id.menu_main -> {
                 val musicDataAllList = dbOpenHelper.selectAllMusicTBL()
                 if (musicDataAllList!!.size <= 0 || musicDataAllList == null) {
@@ -111,6 +122,7 @@ class MainActivity : AppCompatActivity() {
                     mainRecyclerAdapter.notifyDataSetChanged()
                 }
             }
+
             R.id.menu_recode -> {
                 val intent = Intent(this, RecordActivity::class.java)
                 startActivity(intent)
@@ -196,7 +208,7 @@ class MainActivity : AppCompatActivity() {
         subItemDataList.add(SubItemData(R.drawable.iv_movieposter3, "https://www.youtube.com/watch?v=LoRwHdN7H1g"))
         subItemDataList.add(SubItemData(R.drawable.iv_movieposter4, "https://www.youtube.com/watch?v=EkRuV-h6Bv0"))
 
-        binding.rvMainOst.adapter = SubWebviewAdapter(this,subItemDataList)
+        binding.rvMainOst.adapter = SubWebviewAdapter(this, subItemDataList)
         binding.rvMainOst.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 

@@ -14,7 +14,7 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.myungwoo.mp3playerondb.data.MusicData
-import com.myungwoo.mp3playerondb.view.PlayActivity
+import com.myungwoo.mp3playerondb.ui.PlayActivity
 import com.myungwoo.mp3playerondb.R
 
 class MediaPlayerService : Service() {

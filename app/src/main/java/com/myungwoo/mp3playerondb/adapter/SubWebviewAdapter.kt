@@ -10,7 +10,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.myungwoo.mp3playerondb.R
 import com.myungwoo.mp3playerondb.data.SubItemData
-import com.myungwoo.mp3playerondb.view.SubWebviewActivity
+import com.myungwoo.mp3playerondb.ui.SubWebViewActivity
 
 class SubWebviewAdapter(var context : Context, var items : MutableList<SubItemData>) : RecyclerView.Adapter<SubWebviewAdapter.Holder>(){
 
@@ -25,7 +25,7 @@ class SubWebviewAdapter(var context : Context, var items : MutableList<SubItemDa
         holder.ivMainSubImage.setImageResource(item.ivMainSubImage)
 
         holder.ivMainSubImage.setOnClickListener {
-            val intent: Intent = Intent(context, SubWebviewActivity::class.java)
+            val intent: Intent = Intent(context, SubWebViewActivity::class.java)
             intent.putExtra("titleimage", item.ivMainSubImage)
             intent.putExtra("url", item.url)
             context.startActivity(intent)

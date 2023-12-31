@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -15,28 +17,28 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mp3PlayerOnDB"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.RecordActivity"
+            android:name=".ui.RecordActivity"
             android:exported="false" />
 
         <service
             android:name=".service.MediaPlayerService"
             android:enabled="true"
-            android:exported="false">
-        </service>
+            android:exported="false" />
 
         <activity
-            android:name=".view.SubWebviewActivity"
+            android:name=".ui.SubWebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".view.WebviewActivity"
+            android:name=".ui.WebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".view.SplashActivty"
+            android:name=".ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,13 +47,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.AsmrActivity"
+            android:name=".ui.AsmrActivity"
             android:exported="false" />
         <activity
-            android:name=".view.PlayActivity"
+            android:name=".ui.PlayActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="false" />
     </application>
 

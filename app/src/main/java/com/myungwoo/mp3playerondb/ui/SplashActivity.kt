@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.view
+package com.myungwoo.mp3playerondb.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import com.myungwoo.mp3playerondb.databinding.ActivitySplashActivtyBinding
 
-class SplashActivty : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
     lateinit var binding: ActivitySplashActivtyBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

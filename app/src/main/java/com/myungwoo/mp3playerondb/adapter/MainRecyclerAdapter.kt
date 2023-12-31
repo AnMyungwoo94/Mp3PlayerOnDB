@@ -12,8 +12,8 @@ import com.myungwoo.mp3playerondb.*
 import com.myungwoo.mp3playerondb.databinding.ItemRecyclerBinding
 import com.myungwoo.mp3playerondb.db.DBOpenHelper
 import com.myungwoo.mp3playerondb.data.MusicData
-import com.myungwoo.mp3playerondb.view.MainActivity
-import com.myungwoo.mp3playerondb.view.PlayActivity
+import com.myungwoo.mp3playerondb.ui.MainActivity
+import com.myungwoo.mp3playerondb.ui.PlayActivity
 import java.text.SimpleDateFormat
 
 class MainRecyclerAdapter(val context:Context, val musicList:MutableList<MusicData>):

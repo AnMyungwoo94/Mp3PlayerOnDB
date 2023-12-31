@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.myungwoo.mp3playerondb.R
 import com.myungwoo.mp3playerondb.data.AsmrData
-import com.myungwoo.mp3playerondb.view.WebviewActivity
+import com.myungwoo.mp3playerondb.ui.WebViewActivity
 
 class AsmrWebviewAdapter(var context: Context, var items : MutableList<AsmrData>) : RecyclerView.Adapter<AsmrWebviewAdapter.Holder>() {
 
@@ -30,7 +30,7 @@ class AsmrWebviewAdapter(var context: Context, var items : MutableList<AsmrData>
         holder.asmrImge.setImageResource(item.AsmrImge)
 
         holder.iv.setOnClickListener {
-            val intent: Intent = Intent(context, WebviewActivity::class.java)
+            val intent: Intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra("title", item.tvPlayName)
             intent.putExtra("titleimage", item.AsmrImge)
             intent.putExtra("imgUrl", item.playImge)

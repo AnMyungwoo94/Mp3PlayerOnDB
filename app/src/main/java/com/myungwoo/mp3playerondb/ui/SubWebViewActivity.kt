@@ -1,13 +1,12 @@
-package com.myungwoo.mp3playerondb.view
+package com.myungwoo.mp3playerondb.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import com.myungwoo.mp3playerondb.databinding.ActivitySubWebviewBinding
-import com.myungwoo.mp3playerondb.databinding.ActivityWebviewBinding
 
-class SubWebviewActivity : AppCompatActivity() {
+class SubWebViewActivity : AppCompatActivity() {
     lateinit var binding : ActivitySubWebviewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
