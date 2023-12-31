@@ -13,5 +13,7 @@
         <item name="android:statusBarColor">#0000</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
+        <item name="bottomSheetDialogTheme">@style/Theme.App.BottomSheetDialog</item>
     </style>
+
 </resources>

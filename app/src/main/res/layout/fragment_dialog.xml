@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="340dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <ImageView
+        android:id="@+id/iv_record_dialog"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_record_main"
+        app:layout_constraintBottom_toTopOf="@+id/tv_dialog_check_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_dialog_check_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:bufferType="spannable"
+        android:gravity="center"
+        android:text="@string/DialogText"
+        android:textColor="@color/river_bed"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_remittance_confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_record_dialog" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_dialog_cancel"
+        style="@style/DialogButton"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/geyser"
+        android:text="아니요"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.35" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_remittance_confirm"
+        style="@style/DialogButton"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/dodger_blue"
+        android:text="네, 해볼게요!!"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.55" />
+</androidx.constraintlayout.widget.ConstraintLayout>
