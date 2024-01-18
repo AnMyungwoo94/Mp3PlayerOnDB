@@ -32,7 +32,7 @@
 
 |스플래시, 재생목록, 검색, 좋아요|재생 화면| 웹뷰화면|
 |:-----:|:-----:|:-----:|
-|<img width="200" src="https://github.com/AnMyungwoo94/Mp3PlayerOnDB/assets/126849689/97f6cee8-10b3-4003-a654-ed00ce2c5cf8.gif">|<img width="200" src="https://github.com/AnMyungwoo94/Mp3PlayerOnDB/assets/126849689/17052bda-deb4-4b3a-b6a0-885ecd17882e.gif">|<img width="200" src="https://github.com/AnMyungwoo94/Mp3PlayerOnDB/assets/126849689/3bcea210-9779-47aa-b817-e1360a6e32bd.gif" />|
+|<img width="250" src="https://github.com/AnMyungwoo94/Mp3PlayerOnDB/assets/126849689/97f6cee8-10b3-4003-a654-ed00ce2c5cf8.gif">|<img width="250" src="https://github.com/AnMyungwoo94/Mp3PlayerOnDB/assets/126849689/17052bda-deb4-4b3a-b6a0-885ecd17882e.gif">|<img width="250" src="https://github.com/AnMyungwoo94/Mp3PlayerOnDB/assets/126849689/3bcea210-9779-47aa-b817-e1360a6e32bd.gif" />|
 
 ## 4. 기술스택
 - MediaPlayer 
