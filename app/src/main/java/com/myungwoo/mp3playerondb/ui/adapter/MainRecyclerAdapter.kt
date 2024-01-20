@@ -1,4 +1,4 @@
-package com.myungwoo.mp3playerondb.adapter
+package com.myungwoo.mp3playerondb.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
