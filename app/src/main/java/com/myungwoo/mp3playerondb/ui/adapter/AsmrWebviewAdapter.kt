@@ -13,7 +13,7 @@ import com.myungwoo.mp3playerondb.R
 import com.myungwoo.mp3playerondb.data.AsmrData
 import com.myungwoo.mp3playerondb.ui.WebViewActivity
 
-class AsmrWebviewAdapter(var context: Context, var items : MutableList<AsmrData>) : RecyclerView.Adapter<AsmrWebviewAdapter.Holder>() {
+class AsmrWebviewAdapter(var context: Context, private var items: MutableList<AsmrData>) : RecyclerView.Adapter<AsmrWebviewAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val itemView: View =
@@ -24,24 +24,24 @@ class AsmrWebviewAdapter(var context: Context, var items : MutableList<AsmrData>
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        var item: AsmrData = items[position]
+        val item: AsmrData = items[position]
         holder.tvPlayName.setText(item.tvPlayName)
-        holder.iv.setImageResource(item.playImge)
-        holder.asmrImge.setImageResource(item.AsmrImge)
+        holder.iv.setImageResource(item.playImage)
+        holder.asmrImge.setImageResource(item.AsmrImage)
 
         holder.iv.setOnClickListener {
             val intent: Intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra("title", item.tvPlayName)
-            intent.putExtra("titleimage", item.AsmrImge)
-            intent.putExtra("imgUrl", item.playImge)
+            intent.putExtra("titleimage", item.AsmrImage)
+            intent.putExtra("imgUrl", item.playImage)
             intent.putExtra("url", item.url)
             context.startActivity(intent)
         }
     }
-        inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val tvPlayName: TextView by lazy { itemView.findViewById(R.id.tvPlayNameAsmrSecond) }
-            val iv: ImageView by lazy { itemView.findViewById(R.id.ivPlayAsmrSecond) }
-            val asmrImge : ImageView by lazy { itemView.findViewById(R.id.ivAsmrSecond) }
-            val url: WebView by lazy { itemView.findViewById(R.id.webView) }
-        }
+
+    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvPlayName: TextView by lazy { itemView.findViewById(R.id.tvPlayNameAsmrSecond) }
+        val iv: ImageView by lazy { itemView.findViewById(R.id.ivPlayAsmrSecond) }
+        val asmrImge: ImageView by lazy { itemView.findViewById(R.id.ivAsmrSecond) }
     }
+}

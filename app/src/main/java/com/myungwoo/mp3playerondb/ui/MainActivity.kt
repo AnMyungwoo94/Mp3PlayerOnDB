@@ -9,7 +9,6 @@ import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -20,11 +19,11 @@ import com.myungwoo.mp3playerondb.R
 import com.myungwoo.mp3playerondb.ui.adapter.MainRecyclerAdapter
 import com.myungwoo.mp3playerondb.databinding.ActivityMainBinding
 import com.myungwoo.mp3playerondb.data.SubItemData
-import com.myungwoo.mp3playerondb.ui.adapter.SubRecyclerAdapter
 import com.myungwoo.mp3playerondb.ui.adapter.SubWebviewAdapter
 import com.myungwoo.mp3playerondb.util.showSnackbar
 
 class MainActivity : AppCompatActivity() {
+
     companion object {
         const val REQUEST_CODE = 100
         const val DB_NAME = "musicDB2"
@@ -112,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_main -> {
                 val musicDataAllList = dbOpenHelper.selectAllMusicTBL()
                 if (musicDataAllList!!.size <= 0) {
-                    Toast.makeText(applicationContext, "모든 리스트가 없어요", Toast.LENGTH_SHORT).show()
+                    binding.clMain.showSnackbar(R.string.main_not_all_list)
                 } else {
                     musicDataList?.clear()
                     dbOpenHelper.selectAllMusicTBL()?.let { musicDataList?.addAll(it) }

@@ -22,6 +22,7 @@ import com.myungwoo.mp3playerondb.recordwave.Timer
 import java.io.IOException
 
 class RecordActivity : AppCompatActivity(), OnTimerTickListener {
+
     companion object {
         private const val REQUEST_RECORD_AUDIO_CODE = 200
     }
@@ -32,26 +33,22 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
 
     private lateinit var binding: ActivityRecordBinding
     private lateinit var timer: Timer
-    private var recorder: MediaRecorder? = null //레코더 실행
-    private var player: MediaPlayer? = null //플레이 실행
-    private var fileName: String = "" //파일로 저장하기
+    private var recorder: MediaRecorder? = null
+    private var player: MediaPlayer? = null
+    private var fileName: String = ""
     private var state: State = State.RELEASE
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        fileName = "${externalCacheDir?.absolutePath}/audiorecoder.3gp" //파일 저장하기
+        fileName = "${externalCacheDir?.absolutePath}/audiorecoder.3gp"
         timer = Timer(this)
-
-        //1. 권한요청을 하면
-        //2.  onRequestPermissionsResult에서 응답을 받아
         binding.recordButton.setOnClickListener {
             when (state) {
                 State.RELEASE -> {
-                    ChackRecordePermissionStart()
+                    checkRecordePermissionStart()
                 }
 
                 State.RECORDING -> {
@@ -59,11 +56,10 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
                 }
 
                 State.PLAYING -> {
-
+                    //나중에 필요할 때 작성하기!
                 }
             }
         }
-
         binding.recoadPlayButton.setOnClickListener {
             when (state) {
                 State.RELEASE -> {
@@ -75,7 +71,6 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
                 }
             }
         }
-        //처음에는 플레이버튼 실행 안되도록
         binding.recoadPlayButton.isEnabled = false
         binding.recoadPlayButton.alpha = 0.3f
 
@@ -92,7 +87,7 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
         }
     }
 
-    private fun ChackRecordePermissionStart() {
+    private fun checkRecordePermissionStart() {
         when {
             ContextCompat.checkSelfPermission(
                 this,
@@ -124,15 +119,13 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
 
     private fun startRecoding() {
         state = State.RECORDING
-
-        //오디오 레코드 시작
         recorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC) //마이크를 사용하겠다.
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP) //THREE_GPP로 저장하겠다.
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
             setOutputFile(fileName)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB) //인코더 사용
+            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
             try {
-                prepare() //준비
+                prepare()
             } catch (e: IOException) {
                 Log.e("RECODER", e.toString())
             }
@@ -141,20 +134,14 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
 
         binding.waveformView.clearData()
         timer.start()
-
-        //진폭 받아오기/ maxAmplitude 최대 진폭 말안하면 작게 말하면 크게
-        //스타트레코딩은 한번 누르면 한번만 반환되는 함수.
-        //진폭을 실기간으로 가져와야해서 콜백을 사용해야함, 주기적으로 체크할 수 있는 쓰레드 만들어야해 그게 Timer클래스
-        //recorder?.maxAmplitude?.toFloat() 원래 이거 사용했다가 아래로 변경 흐름상
         binding.recordButton.setImageDrawable(
             ContextCompat.getDrawable(
                 this, R.drawable.ic_record_stop_24
             )
         )
-        //오디오 실행시 버튼 조절하기
         binding.recordButton.imageTintList = ColorStateList.valueOf(Color.BLACK)
-        binding.recoadPlayButton.isEnabled = false //재생버튼은 더이상 눌리지 않음
-        binding.recoadPlayButton.alpha = 0.3f //재생버튼이 조금 흐려짐(안됨 표시)
+        binding.recoadPlayButton.isEnabled = false
+        binding.recoadPlayButton.alpha = 0.3f
     }
 
     private fun stopRecoding() {
@@ -172,8 +159,8 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
             )
         )
         binding.recordButton.imageTintList = ColorStateList.valueOf(Color.RED)
-        binding.recoadPlayButton.isEnabled = true //재생버튼은 더이상 눌리지 않음
-        binding.recoadPlayButton.alpha = 1.0f //재생버튼이 조금 흐려짐(안됨 표시)
+        binding.recoadPlayButton.isEnabled = true
+        binding.recoadPlayButton.alpha = 1.0f
     }
 
     private fun startPlaying() {
@@ -189,7 +176,6 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
             start()
         }
 
-        //etOnCompletionListener을 사용하여 끝났을때를 알고 stop으로 바꿔줌
         player?.setOnCompletionListener {
             stopPlaying()
         }
@@ -248,13 +234,10 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //요청한 퍼미션을 응답받음
-
         val audioRecordPermissionGranted = requestCode == REQUEST_RECORD_AUDIO_CODE
                 && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED
 
         if (audioRecordPermissionGranted) {
-            //녹음작업 시작
             onRecord(true)
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(
@@ -278,7 +261,7 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
             String.format("%02d:%02d.%02d", minute, second, millisecond / 10)
 
         if (state == State.PLAYING) {
-            binding.waveformView.replayAmplitude() //uration.toInt() 사용하지는 않아
+            binding.waveformView.replayAmplitude()
         } else if (state == State.RECORDING) {
             binding.waveformView.addAmplitude(recorder?.maxAmplitude?.toFloat() ?: 0f)
         }

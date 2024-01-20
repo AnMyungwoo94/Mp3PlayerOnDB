@@ -14,15 +14,14 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashActivtyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Actionbar 제거
         supportActionBar?.hide()
 
         val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed(Runnable {
+        handler.postDelayed({
             Intent(this, MainActivity::class.java).apply {
                 startActivity(this)
                 finish()
             }
-        }, 1500) // 3초 후(3000) 스플래시 화면을 닫습니다
+        }, 1500)
     }
 }
