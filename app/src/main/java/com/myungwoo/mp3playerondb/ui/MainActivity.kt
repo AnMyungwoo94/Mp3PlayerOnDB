@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startProcess()
             } else {
-                binding.clMain.showSnackbar(R.string.main_ppermission)
+                binding.clMain.showSnackbar(R.string.main_permission)
                 finish()
             }
         }

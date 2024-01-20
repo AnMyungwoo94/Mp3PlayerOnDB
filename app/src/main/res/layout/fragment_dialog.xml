@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:bufferType="spannable"
         android:gravity="center"
-        android:text="@string/DialogText"
+        android:text="@string/dialog_Text"
         android:textColor="@color/river_bed"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_remittance_confirm"

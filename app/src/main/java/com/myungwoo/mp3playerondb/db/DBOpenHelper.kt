@@ -8,6 +8,7 @@ import android.util.Log
 import com.myungwoo.mp3playerondb.data.MusicData
 
 class DBOpenHelper(context: Context, dbName: String, version: Int) : SQLiteOpenHelper(context, dbName, null, version) {
+
     override fun onCreate(db: SQLiteDatabase?) {
         val musicTbl = "create table musicTBL (id TEXT primary key, title TEXT, artist TEXT, albumId TEXT, duration INTEGER, likes INTEGER)"
         db?.execSQL(musicTbl)

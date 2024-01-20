@@ -160,7 +160,6 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     binding.sbPlay.progress = currentPosition
                     binding.tvPlayDuration.text = strCurrentPosition
 
-                    // mediaPlayer의 재생 상태에 따라 재생 버튼 이미지 변경
                     if (mediaPlayer!!.isPlaying) {
                         binding.ibPlayPlay.setImageResource(R.drawable.ic_pause_24)
                     } else {

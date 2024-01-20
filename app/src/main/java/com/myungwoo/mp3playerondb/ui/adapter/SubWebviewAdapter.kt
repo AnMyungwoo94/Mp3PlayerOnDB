@@ -12,7 +12,9 @@ import com.myungwoo.mp3playerondb.R
 import com.myungwoo.mp3playerondb.data.SubItemData
 import com.myungwoo.mp3playerondb.ui.SubWebViewActivity
 
-class SubWebviewAdapter(var context: Context, var items: MutableList<SubItemData>) : RecyclerView.Adapter<SubWebviewAdapter.Holder>() {
+class SubWebviewAdapter(
+    var context: Context, private var items: MutableList<SubItemData>
+) : RecyclerView.Adapter<SubWebviewAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val itemView: View =
@@ -21,12 +23,13 @@ class SubWebviewAdapter(var context: Context, var items: MutableList<SubItemData
     }
 
     override fun getItemCount(): Int = items.size
+
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val item: SubItemData = items[position]
         holder.ivMainSubImage.setImageResource(item.ivMainSubImage)
 
         holder.ivMainSubImage.setOnClickListener {
-            val intent: Intent = Intent(context, SubWebViewActivity::class.java)
+            val intent = Intent(context, SubWebViewActivity::class.java)
             intent.putExtra("titleimage", item.ivMainSubImage)
             intent.putExtra("url", item.url)
             context.startActivity(intent)
@@ -35,6 +38,5 @@ class SubWebviewAdapter(var context: Context, var items: MutableList<SubItemData
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivMainSubImage: ImageView by lazy { itemView.findViewById(R.id.ivMainSubImage) }
-        val url: WebView by lazy { itemView.findViewById(R.id.subWebView) }
     }
 }

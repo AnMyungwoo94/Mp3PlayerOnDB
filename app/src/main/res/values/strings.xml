@@ -1,6 +1,24 @@
 <resources>
     <string name="app_name">MusicPlay</string>
-    <string name="permission_message">녹음 권한을 켜주셔야지 앱을 정상적으로 사용할 수 있습니다. 앱 설정 화면으로 진입하셔서 권한을 켜주세요.</string>
-    <string name="DialogText">녹음 기능이 업데이트 되었습니다! \n 지금 해보시겠습니까?</string>
+    <string name="record_permission_message">녹음 권한을 켜주셔야지 앱을 정상적으로 사용할 수 있습니다. 앱 설정 화면으로 진입하셔서 권한을 켜주세요.</string>
+    <string name="record_permission_explanation">녹음 권한을 켜주셔야지 앱을 정상적으로 사용할 수 있습니다.</string>
+    <string name="record_ok">권한 허용하기</string>
+    <string name="record_setting">권한 변경하러 가기</string>
+    <string name="record_cancel">취소</string>
+    <string name="dialog_Text">녹음 기능이 업데이트 되었습니다! \n 지금 해보시겠습니까?</string>
+    <string name="main_like_list">좋아요 리스트가 없습니다</string>
+    <string name="main_permission">권한승인을 해야만 앱을 사용할 수 있습니다</string>
+    <string name="main_no_music">메모리에 음악파일에 없습니다. 다운받아주세요</string>
+    <string name="main_not_all_list">모든 리스트가 없어요</string>
     <string name="play_duration">00:00</string>
+    <string name="asmr_firewood">장작소리</string>
+    <string name="asmr_rain">빗소리</string>
+    <string name="asmr_wave">파도소리</string>
+    <string name="asmr_wind">바람소리</string>
+    <string name="asmr_fireworks">폭죽소리</string>
+    <string name="asmr_ice">얼음소리</string>
+    <string name="asmr_thunder">번개소리</string>
+    <string name="asmr_soap">비누소리</string>
+    <string name="asmr_forest">숲소리</string>
+    <string name="asmr_sea">바다소리</string>
 </resources>

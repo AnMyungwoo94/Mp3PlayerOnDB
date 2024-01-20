@@ -12,7 +12,15 @@ import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class MusicData(var id: String, var title: String?, var artist: String?, var albumId: String?, var duration: Int?, var likes: Int?) : Parcelable {
+class MusicData(
+    var id: String,
+    var title: String?,
+    var artist: String?,
+    var albumId: String?,
+    var duration: Int?,
+    var likes: Int?
+) : Parcelable {
+
     companion object : Parceler<MusicData> {
         override fun create(parcel: Parcel): MusicData {
             return MusicData(parcel)

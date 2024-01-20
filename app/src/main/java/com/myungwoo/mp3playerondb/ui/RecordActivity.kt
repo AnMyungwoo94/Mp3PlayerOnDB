@@ -200,30 +200,29 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
 
     private fun showPermissionRationalDialog() {
         AlertDialog.Builder(this)
-            .setMessage("녹음 권한을 켜주셔야지 앱을 정상적으로 사용할 수 있습니다.")
-            .setPositiveButton("권한 허용하기") { _, _ ->
+            .setMessage(R.string.record_permission_explanation)
+            .setPositiveButton(R.string.record_ok) { _, _ ->
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.RECORD_AUDIO),
                     REQUEST_RECORD_AUDIO_CODE
                 )
-            }.setNegativeButton("취소") { dialogInterface, _ -> dialogInterface.cancel() }
+            }.setNegativeButton(R.string.record_cancel) { dialogInterface, _ -> dialogInterface.cancel() }
             .show()
     }
 
     private fun showPermissionSettingDialog() {
         AlertDialog.Builder(this)
             .setMessage(R.string.record_permission_message)
-            .setPositiveButton("권한 변경하러 가기") { _, _ ->
+            .setPositiveButton(R.string.record_setting) { _, _ ->
                 navigateToAppSetting()
-            }.setNegativeButton("취소") { dialogInterface, _ -> dialogInterface.cancel() }
+            }.setNegativeButton(R.string.record_cancel) { dialogInterface, _ -> dialogInterface.cancel() }
             .show()
     }
 
     private fun navigateToAppSetting() {
-        //휴대폰 설정으로 이동하기
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            data = Uri.fromParts("package", packageName, null) //우리앱의 디테일 세팅으로 가기
+            data = Uri.fromParts("package", packageName, null)
         }
         startActivity(intent)
     }
