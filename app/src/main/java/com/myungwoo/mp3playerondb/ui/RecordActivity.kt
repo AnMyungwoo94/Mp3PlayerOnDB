@@ -227,7 +227,7 @@ class RecordActivity : AppCompatActivity(), OnTimerTickListener {
 
     private fun showPermissionSettingDialog() {
         AlertDialog.Builder(this)
-            .setMessage(R.string.permission_message)
+            .setMessage(R.string.record_permission_message)
             .setPositiveButton("권한 변경하러 가기") { _, _ ->
                 navigateToAppSetting()
             }.setNegativeButton("취소") { dialogInterface, _ -> dialogInterface.cancel() }
