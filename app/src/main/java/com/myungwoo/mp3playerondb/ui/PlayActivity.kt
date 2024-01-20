@@ -11,40 +11,34 @@ import com.myungwoo.mp3playerondb.data.MusicData
 import com.myungwoo.mp3playerondb.R
 import com.myungwoo.mp3playerondb.databinding.ActivityPlayBinding
 import kotlinx.coroutines.*
-import java.text.SimpleDateFormat
 
 class PlayActivity : AppCompatActivity(), View.OnClickListener {
-    private var mediaPlayer: MediaPlayer? = null
+
     private lateinit var binding: ActivityPlayBinding
     private lateinit var musicData: MusicData
+    private var mediaPlayer: MediaPlayer? = null
     private var playList: MutableList<Parcelable>? = null
-    private var currentposition: Int = 0
-    private val ALBUM_IMAGE_SIZE = 100
     private var mp3playerJob: Job? = null
     private var pauseFlag = false
+    private var currentposition: Int = 0
+    private val albumImageSize = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //액션바 툴바로 변경
-        setSupportActionBar(binding.toolbarPlay)
 
+        setSupportActionBar(binding.toolbarPlay)
         playList = intent.getParcelableArrayListExtra("parcelableList")
         currentposition = intent.getIntExtra("position", 0)
         musicData = playList?.get(currentposition) as MusicData
-        binding.sbPlay.max = Int.MAX_VALUE
-        binding.tvPlayAlbumTitle.text = musicData.title
-        binding.tvPlayAlbumArtist.text = musicData.artist
-        binding.tvPlayTotalDuration.text = SimpleDateFormat("mm:ss").format(musicData.duration)
-        binding.tvPlayDuration.text = "00:00"
-        val bitmap = musicData.getAlbumBitmap(this, ALBUM_IMAGE_SIZE)
-        if (bitmap != null) {
-            binding.cvPlayAlbumImage.setImageBitmap(bitmap)
-        } else {
-            binding.cvPlayAlbumImage.setImageResource(R.drawable.iv_music)
-        }
-        //음악 데이터 가져오기
+
+        setMusicData()
+        setMusicPlay()
+
+    }
+
+    private fun setMusicPlay() {
         mediaPlayer = MediaPlayer.create(this, musicData.getMusicUri())
 
         binding.ibPlayAllList.setOnClickListener(this)
@@ -70,6 +64,20 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
+    private fun setMusicData() {
+        binding.sbPlay.max = Int.MAX_VALUE
+        binding.tvPlayAlbumTitle.text = musicData.title
+        binding.tvPlayAlbumArtist.text = musicData.artist
+        binding.tvPlayTotalDuration.text = formatDuration(musicData.duration)
+        binding.tvPlayDuration.text = getString(R.string.play_duration)
+        val bitmap = musicData.getAlbumBitmap(this, albumImageSize)
+        if (bitmap != null) {
+            binding.cvPlayAlbumImage.setImageBitmap(bitmap)
+        } else {
+            binding.cvPlayAlbumImage.setImageResource(R.drawable.iv_music)
+        }
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.ib_play_all_list -> {
@@ -91,10 +99,8 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     pauseFlag = false
                     playMusic()
 
-                    // 추가: 다음 곡으로 자동 이동
                     mediaPlayer?.setOnCompletionListener {
                         if (!pauseFlag) {
-                            // 다음 곡으로 이동
                             nextSong()
                         }
                     }
@@ -129,14 +135,14 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         mediaPlayer?.stop()
         mp3playerJob?.cancel()
         musicData = playList?.get(currentposition) as MusicData
-        mediaPlayer = MediaPlayer.create(this, musicData?.getMusicUri())
+        mediaPlayer = MediaPlayer.create(this, musicData.getMusicUri())
         binding.sbPlay.progress = 0
-        binding.tvPlayDuration.text = "00:00"
-        binding.tvPlayAlbumTitle.text = musicData?.title
-        binding.tvPlayAlbumArtist.text = musicData?.artist
-        binding.tvPlayTotalDuration.text = SimpleDateFormat("mm:ss").format(musicData?.duration)
-        binding.tvPlayDuration.text = "00:00"
-        val bitmap = musicData?.getAlbumBitmap(this, ALBUM_IMAGE_SIZE)
+        binding.tvPlayDuration.text = getString(R.string.play_duration)
+        binding.tvPlayAlbumTitle.text = musicData.title
+        binding.tvPlayAlbumArtist.text = musicData.artist
+        binding.tvPlayTotalDuration.text = formatDuration(musicData.duration)
+        binding.tvPlayDuration.text = getString(R.string.play_duration)
+        val bitmap = musicData.getAlbumBitmap(this, albumImageSize)
         if (bitmap != null) {
             binding.cvPlayAlbumImage.setImageBitmap(bitmap)
         } else {
@@ -148,9 +154,8 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         val backgroundScope = CoroutineScope(Dispatchers.Default + Job())
         mp3playerJob = backgroundScope.launch {
             while (mediaPlayer!!.isPlaying) {
-                var currentPosition = mediaPlayer?.currentPosition!!
-                var strCurrentPosition =
-                    SimpleDateFormat("mm:ss").format(mediaPlayer?.currentPosition)
+                val currentPosition = mediaPlayer?.currentPosition!!
+                val strCurrentPosition = formatDuration(mediaPlayer?.currentPosition)
                 runOnUiThread {
                     binding.sbPlay.progress = currentPosition
                     binding.tvPlayDuration.text = strCurrentPosition
@@ -162,21 +167,19 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                         binding.ibPlayPlay.setImageResource(R.drawable.ic_play_circle_24)
                     }
 
-                    // 뷰를 갱신
                     binding.root.invalidate()
                 }
                 try {
                     delay(1000)
                 } catch (e: java.lang.Exception) {
-                    Log.e("PlayActivity", "delay 오류발생 ${e.printStackTrace()}")
+                    Log.e("PlayActivity", "delay 오류 발생 ${e.printStackTrace()}")
                 }
             }
             if (!pauseFlag) {
                 runOnUiThread {
                     binding.sbPlay.progress = 0
                     binding.ibPlayPlay.setImageResource(R.drawable.ic_play_circle_24)
-                    binding.tvPlayDuration.text = "00:00"
-                    // 뷰를 갱신
+                    binding.tvPlayDuration.text = getString(R.string.play_duration)
                     binding.root.invalidate()
                 }
             }
@@ -194,7 +197,15 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         playMusic()
     }
 
+    private fun formatDuration(durationInMillis: Int?): String {
+        val duration = durationInMillis ?: 0
+        val minutes = duration / 1000 / 60
+        val seconds = duration / 1000 % 60
+        return String.format("%02d:%02d", minutes, seconds)
+    }
+
     override fun onBackPressed() {
+        super.onBackPressed()
         mp3playerJob?.cancel()
         mediaPlayer?.stop()
         finish()
@@ -207,6 +218,5 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         mediaPlayer?.release()
         mediaPlayer = null
         finish()
-        Log.e("라이프사이클", "onDestroy()")
     }
 }

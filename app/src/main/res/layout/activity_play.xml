@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:gravity="left"
-                android:text="00:00"
+                android:text="@string/play_duration"
                 android:textSize="15sp" />
 
             <View
