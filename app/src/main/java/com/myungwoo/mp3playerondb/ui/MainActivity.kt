@@ -6,9 +6,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -138,9 +140,25 @@ class MainActivity : AppCompatActivity() {
                 startProcess()
             } else {
                 binding.clMain.showSnackbar(R.string.main_permission)
-                finish()
+                showPermissionSettingDialog()
             }
         }
+    }
+
+    private fun showPermissionSettingDialog() {
+        AlertDialog.Builder(this)
+            .setMessage(R.string.main_permission)
+            .setPositiveButton(R.string.record_setting) { _, _ ->
+                navigateToAppSetting()
+            }.setNegativeButton(R.string.record_cancel) { dialogInterface, _ -> dialogInterface.cancel() }
+            .show()
+    }
+
+    private fun navigateToAppSetting() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.fromParts("package", packageName, null)
+        }
+        startActivity(intent)
     }
 
     private fun startProcess() {
