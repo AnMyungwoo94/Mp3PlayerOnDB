@@ -37,14 +37,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var subItemDataList: MutableList<SubItemData>
     private val dbOpenHelper by lazy { DBOpenHelper(this, DB_NAME, VERSION) }
     private var musicDataList: MutableList<MusicData>? = mutableListOf()
-    private var isDialogShown = false
 
     override fun onResume() {
         super.onResume()
+
+        val prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val isDialogShown = prefs.getBoolean("isDialogShown", false)
+
         if (!isDialogShown) {
             val dialogFragment = DialogFragment()
             dialogFragment.show(supportFragmentManager, "dialogFragment")
-            isDialogShown = true
+            prefs.edit().putBoolean("isDialogShown", true).apply()
         }
     }
 
