@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
@@ -23,6 +24,7 @@ import com.myungwoo.mp3playerondb.databinding.ActivityMainBinding
 import com.myungwoo.mp3playerondb.data.SubItemData
 import com.myungwoo.mp3playerondb.ui.adapter.SubWebviewAdapter
 import com.myungwoo.mp3playerondb.util.showSnackbar
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
@@ -114,13 +116,17 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.menu_main -> {
-                val musicDataAllList = dbOpenHelper.selectAllMusicTBL()
-                if (musicDataAllList!!.size <= 0) {
-                    binding.clMain.showSnackbar(R.string.main_not_all_list)
-                } else {
-                    musicDataList?.clear()
-                    dbOpenHelper.selectAllMusicTBL()?.let { musicDataList?.addAll(it) }
-                    mainRecyclerAdapter.notifyDataSetChanged()
+                try {
+                    val musicDataAllList = dbOpenHelper.selectAllMusicTBL()
+                    if (musicDataAllList?.size == null) {
+                        binding.clMain.showSnackbar(R.string.main_not_all_list)
+                    } else {
+                        musicDataList?.clear()
+                        dbOpenHelper.selectAllMusicTBL()?.let { musicDataList?.addAll(it) }
+                        mainRecyclerAdapter.notifyDataSetChanged()
+                    }
+                } catch (e: IOException) {
+                    Log.e("List error", e.toString())
                 }
             }
 
